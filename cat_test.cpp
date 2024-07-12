@@ -9,6 +9,7 @@
 #include <list>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <chrono>
 
 const int WINDOW_WIDTH = 1600;
 const int WINDOW_HEIGHT = 1200;
@@ -47,6 +48,8 @@ std::vector<b2Body*> particles;
 b2World* worldPtr;
 
 std::list<b2Body*> sushis;
+std::vector<b2Body*> obstacles;
+std::vector<b2Body*> staticObjects;
 
 std::vector<b2DistanceJoint *> outerJoints;
 std::vector<b2DistanceJoint *> innerJoints;
@@ -96,8 +99,6 @@ void changeParticleCircleRadius() {
         // innerJoints[i]->SetStiffness(innerJoints[i]->GetStiffness()/200.0f);
     }
 }
-
-
 
 
 // Function to create a circle and return its body
@@ -516,10 +517,10 @@ void renderCatEars(SDL_Renderer* renderer, b2World& world) {
 }
 
 void renderStaticObjects(SDL_Renderer* renderer, b2World& world) {
-    for (b2Body* body = world.GetBodyList(); body != nullptr; body = body->GetNext()) {
-        if (body->GetType() == b2_staticBody) {
-            b2PolygonShape* shape = static_cast<b2PolygonShape*>(body->GetFixtureList()->GetShape());
-            SDL_Rect rect = box2DToSDL(body->GetPosition(), shape->m_vertices[2].x * 2, shape->m_vertices[2].y * 2);
+    for (auto body = staticObjects.begin(); body != staticObjects.end(); body = next(body)) {
+        if ((*body)->GetType() == b2_staticBody) {
+            b2PolygonShape* shape = static_cast<b2PolygonShape*>((*body)->GetFixtureList()->GetShape());
+            SDL_Rect rect = box2DToSDL((*body)->GetPosition(), shape->m_vertices[2].x * 2, shape->m_vertices[2].y * 2);
             SDL_SetRenderDrawColor(renderer, 128, 128, 128, SDL_ALPHA_OPAQUE);
             SDL_RenderFillRect(renderer, &rect);
         }
@@ -542,11 +543,63 @@ void renderSushi(SDL_Renderer* renderer, b2World& world, b2Body& body) {
     rect.w = (int)((vertices[2].x - vertices[0].x) * SCALE);
     rect.h = (int)((vertices[2].y - vertices[0].y) * SCALE);
     SDL_RenderFillRect(renderer, &rect);
+}
 
+void renderSushis(SDL_Renderer* renderer, b2World& world) {
+    for (auto& body : sushis) {
+        renderSushi(renderer, world, *body);
+    }
+}
 
+void renderObstacle(SDL_Renderer* renderer, b2World& world, b2Body& body) {
+    // Render an obstacle as a polygon to allow rotation
+    b2Fixture* fixture = body.GetFixtureList();
+    while (fixture) {
+        b2Shape* shape = fixture->GetShape();
+        if (shape->GetType() == b2Shape::e_polygon) {
+            b2PolygonShape* polygon = static_cast<b2PolygonShape*>(shape);
+            const int32 vertexCount = polygon->m_count;
+            Sint16 vx[vertexCount];
+            Sint16 vy[vertexCount];
+
+            for (int i = 0; i < vertexCount; ++i) {
+                b2Vec2 wp = body.GetWorldPoint(polygon->m_vertices[i]);
+                vx[i] = static_cast<Sint16>(wp.x * SCALE);
+                vy[i] = static_cast<Sint16>(wp.y * SCALE);
+            }
+
+            // Draw filled polygon with rotation handled
+            filledPolygonRGBA(renderer, vx, vy, vertexCount, 0, 0, 0, 255);
+        
+        }
+        fixture = fixture->GetNext();
+    }
 }
 
 
+void renderObstacles(SDL_Renderer* renderer, b2World& world) {
+    for (auto& body : obstacles) {
+        renderObstacle(renderer, world, *body);
+    }
+}
+
+void generateRandomSushi(b2World& world) {
+
+    float x = (rand() % (WINDOW_WIDTH - 100)) / SCALE;
+    float y = (rand() % (WINDOW_HEIGHT - 100)) / SCALE;
+    b2BodyDef rectangleBodyDef;
+    rectangleBodyDef.type = b2_kinematicBody;
+    rectangleBodyDef.position.Set(x, y);
+    b2Body* rectangleBody = world.CreateBody(&rectangleBodyDef);
+    b2PolygonShape rectangleBox;
+    rectangleBox.SetAsBox(SUSHI_WIDTH, SUSHI_HEIGHT);
+    b2FixtureDef rectangleFixtureDef;
+    rectangleFixtureDef.shape = &rectangleBox;
+    rectangleFixtureDef.density = 1.0f;
+    rectangleFixtureDef.friction = 0.3f;
+    rectangleBody->CreateFixture(&rectangleFixtureDef);
+    sushis.push_back(rectangleBody);
+}
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -561,43 +614,88 @@ int main(int argc, char* argv[]) {
     b2World world(gravity);
     worldPtr = &world;
 
-    // Define the ground body.
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(WINDOW_WIDTH / SCALE / 2, (WINDOW_HEIGHT / SCALE) - 0.5f);
-    b2Body* groundBody = world.CreateBody(&groundBodyDef);
-    b2PolygonShape groundBox;
-    groundBox.SetAsBox(WINDOW_WIDTH / SCALE / 2, 0.5f); // As wide as the screen
-    groundBody->CreateFixture(&groundBox, 0.0f);
+    // // Define the ground body.
+    // b2BodyDef groundBodyDef;
+    // groundBodyDef.position.Set(WINDOW_WIDTH / SCALE / 2, (WINDOW_HEIGHT / SCALE) - 0.5f);
+    // b2Body* groundBody = world.CreateBody(&groundBodyDef);
+    // b2PolygonShape groundBox;
+    // groundBox.SetAsBox(WINDOW_WIDTH / SCALE / 2, 0.5f); // As wide as the screen
+    // groundBody->CreateFixture(&groundBox, 0.0f);
 
     // Define the left wall body.
     b2BodyDef leftWallBodyDef;
-    leftWallBodyDef.position.Set(15.0f, WINDOW_HEIGHT / SCALE / 2);
+    leftWallBodyDef.position.Set(5.0f, WINDOW_HEIGHT / SCALE / 2);
     b2Body* leftWallBody = world.CreateBody(&leftWallBodyDef);
     b2PolygonShape leftWallBox;
     leftWallBox.SetAsBox(0.5f, WINDOW_HEIGHT / SCALE / 4); // As tall as the screen
     leftWallBody->CreateFixture(&leftWallBox, 0.0f);
+    staticObjects.push_back(leftWallBody);
 
     // Define the right wall body.
     b2BodyDef rightWallBodyDef;
-    rightWallBodyDef.position.Set((WINDOW_WIDTH / SCALE) - 15.0f, WINDOW_HEIGHT / SCALE / 2);
+    rightWallBodyDef.position.Set((WINDOW_WIDTH / SCALE) - 5.0f, WINDOW_HEIGHT / SCALE / 2);
     b2Body* rightWallBody = world.CreateBody(&rightWallBodyDef);
     b2PolygonShape rightWallBox;
     rightWallBox.SetAsBox(0.5f, WINDOW_HEIGHT / SCALE / 4); // As tall as the screen
     rightWallBody->CreateFixture(&rightWallBox, 0.0f);
+    staticObjects.push_back(rightWallBody);
 
-    // Define a small rectangle
-    b2BodyDef rectangleBodyDef;
-    rectangleBodyDef.type = b2_dynamicBody;
-    rectangleBodyDef.position.Set(WINDOW_WIDTH / SCALE / 2, 1.0f);
-    b2Body* rectangleBody = world.CreateBody(&rectangleBodyDef);
-    b2PolygonShape rectangleBox;
-    rectangleBox.SetAsBox(SUSHI_WIDTH, SUSHI_HEIGHT);
-    b2FixtureDef rectangleFixtureDef;
-    rectangleFixtureDef.shape = &rectangleBox;
-    rectangleFixtureDef.density = 1.0f;
-    rectangleFixtureDef.friction = 0.3f;
-    rectangleBody->CreateFixture(&rectangleFixtureDef);
-    sushis.push_back(rectangleBody);
+    // Make a horizontal rectangle obstacle
+    // Kinematic obstacle
+    b2BodyDef obstacleBodyDef;
+    obstacleBodyDef.type = b2_kinematicBody;
+    obstacleBodyDef.position.Set(10.0f, 10.0f);
+    obstacleBodyDef.fixedRotation = false;
+    obstacleBodyDef.gravityScale = 0;
+    obstacleBodyDef.angularVelocity = 5.0f;
+    b2Body* obstacleBody = world.CreateBody(&obstacleBodyDef);
+    b2PolygonShape obstacleBox;
+    obstacleBox.SetAsBox(4.0f, 0.5f);
+    b2FixtureDef obstacleFixtureDef;
+    obstacleFixtureDef.shape = &obstacleBox;
+    obstacleFixtureDef.density = 1.0f;
+    obstacleFixtureDef.friction = 0.3f;
+    obstacleBody->CreateFixture(&obstacleFixtureDef);
+    obstacles.push_back(obstacleBody);
+
+    // Dynamic obstacle
+    b2BodyDef obstacleBodyDef2;
+    obstacleBodyDef2.type = b2_dynamicBody;
+    obstacleBodyDef2.position.Set(20.0f, 10.0f);
+    obstacleBodyDef2.fixedRotation = false;
+    obstacleBodyDef2.gravityScale = 0;  // This ensures the body doesn't fall due to gravity
+    b2Body* obstacleBody2 = world.CreateBody(&obstacleBodyDef2);
+
+    b2PolygonShape obstacleBox2;
+    obstacleBox2.SetAsBox(3.0f, 0.5f);  // Corrected variable name here
+    b2FixtureDef obstacleFixtureDef2;
+    obstacleFixtureDef2.shape = &obstacleBox2;
+    obstacleFixtureDef2.density = 1.0f;
+    obstacleFixtureDef2.friction = 0.3f;
+    obstacleBody2->CreateFixture(&obstacleFixtureDef2);
+
+    b2BodyDef anchorBodyDef;
+    anchorBodyDef.type = b2_staticBody;
+    anchorBodyDef.position.Set(20.0f, 10.0f);  // Same as the obstacle position
+    b2Body* anchorBody = world.CreateBody(&anchorBodyDef);
+
+    b2RevoluteJointDef jointDef;
+    jointDef.Initialize(anchorBody, obstacleBody2, anchorBody->GetWorldCenter());
+    jointDef.enableMotor = false;
+    jointDef.enableLimit = false;
+    b2RevoluteJoint* joint = (b2RevoluteJoint*)world.CreateJoint(&jointDef);
+
+    obstacles.push_back(obstacleBody2);
+
+
+
+
+
+
+
+    for (int i = 0; i < 15; i++) 
+        generateRandomSushi(world);
+
 
     bool quit = false;
     SDL_Event event;
@@ -612,6 +710,7 @@ int main(int argc, char* argv[]) {
             if (event.type == SDL_QUIT) {
                 quit = true;
             } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+                RADIUS = 1.0f;
                 float centerX = event.button.x / SCALE;
                 float centerY = event.button.y / SCALE;
 
@@ -645,6 +744,7 @@ int main(int argc, char* argv[]) {
                         innerJoints.push_back(jb);
                     }
                 }
+
             }
         }
 
@@ -668,7 +768,7 @@ int main(int argc, char* argv[]) {
             sushis.remove(body);
 
             // Make circle bigger by lengthening the distance joints and increasing radius
-            RADIUS = RADIUS * 2.0f;
+            RADIUS = RADIUS * 1.1f;
             changeParticleCircleRadius();
         }
         bodiesToRemove.clear();
@@ -676,6 +776,13 @@ int main(int argc, char* argv[]) {
 
 
         ////////////////////////// Forward time //////////////////////////
+        // Set dt to ensure stable 60 fps
+        static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
+        std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+        std::chrono::duration<float> elapsed_seconds = now - last;
+        last = now;
+        dt = elapsed_seconds.count();
+
         world.Step(dt, 6, 2); // Step the world forward
         // std::cout << "Step" << std::endl;
 
@@ -687,7 +794,7 @@ int main(int argc, char* argv[]) {
         SDL_RenderClear(renderer);
         // Render sushi
         if (!sushis.empty()) 
-            renderSushi(renderer, world, *sushis.front());
+            renderSushis(renderer, world);
         // renderTexture(renderer, particles, texture);
         // renderParticles(renderer, world);
         renderPolygon(renderer, world);
@@ -700,6 +807,7 @@ int main(int argc, char* argv[]) {
 
         // Render static objects in grey
         renderStaticObjects(renderer, world);
+        renderObstacles(renderer, world);
 
 
         // Present the rendered scene
