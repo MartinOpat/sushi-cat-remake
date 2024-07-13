@@ -159,7 +159,7 @@ void MainApp::renderUI() {
         isNewCat = false;
     } 
     std::chrono::duration<float> elapsed_seconds = now - last;
-    if (elapsed_seconds.count() < 3) {
+    if (elapsed_seconds.count() < 2) {
         view->renderSushiEatenUI(cat->getEatenSushis());
     }
 }

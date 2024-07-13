@@ -140,7 +140,7 @@ void Cat::setPosition(float x, float y) {
         float xNew = x + (particles[i]->GetPosition().x - centerX);
         float yNew = y + (particles[i]->GetPosition().y - centerY);
         particles[i]->SetTransform(b2Vec2(xNew, yNew), particles[i]->GetAngle());
-        particles[i]->SetLinearVelocity(b2Vec2(0, 0));
+        particles[i]->SetLinearVelocity(b2Vec2(0.0f, 0.001f));
     }
 }
 
