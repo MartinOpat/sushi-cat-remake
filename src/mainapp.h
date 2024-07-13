@@ -16,6 +16,7 @@
 #include <SDL2/SDL_image.h>
 #include <vector>
 #include <list>
+#include <set>
 #include <chrono>
 #include <algorithm>
 

@@ -26,12 +26,24 @@ MainApp::MainApp() {
 }
 
 MainApp::~MainApp() {
-    delete view;
-    delete world;
-
     for (Wall* wall : walls) {
+        world->getb2World()->DestroyBody(wall->getb2Body());
         delete wall;
     }
+    for (Obstacle* obstacle : obstacles) {
+        world->getb2World()->DestroyBody(obstacle->getb2Body());
+        delete obstacle;
+    }
+    for (Sushi* sushi : sushis) {
+        world->getb2World()->DestroyBody(sushi->getb2Body());
+        delete sushi;
+    }
+    if (cat != nullptr) {
+        cat->destroy(world->getb2World());
+        delete cat;
+    }
+    delete world;
+    delete view;
 }
 
 void MainApp::run() {
@@ -47,12 +59,12 @@ void MainApp::run() {
 
 void MainApp::handleCollisions() {
     if (cat == nullptr) return;
-    std::vector<Sushi*> sushiesToRemove;
+    std::set<Sushi*> sushiesToRemove;
     for (auto* particle : cat->getParticles()) {
         for (auto* sushi : sushis) {
             b2Body* sushiBody = sushi->getb2Body();
             if (b2TestOverlap(particle->GetFixtureList()->GetShape(), 0, sushiBody->GetFixtureList()->GetShape(), 0, particle->GetTransform(), sushiBody->GetTransform())) {
-                sushiesToRemove.push_back(sushi);
+                sushiesToRemove.insert(sushi);
             }
         }
     }
@@ -62,6 +74,7 @@ void MainApp::handleCollisions() {
     for (Sushi* sushi : sushiesToRemove) {
         world->getb2World()->DestroyBody(sushi->getb2Body());
         sushis.remove(sushi);
+        delete sushi;
 
         // Make circle bigger by lengthening the distance joints and increasing radius
         cat->updateRadius(cat->getRadius()*1.1f);

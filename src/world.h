@@ -6,6 +6,7 @@
 class World {
 public:
     World();
+    ~World();
 
     b2World* getb2World() { return world; }
 
