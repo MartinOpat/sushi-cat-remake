@@ -151,7 +151,7 @@ void MainApp::renderUI() {
     }
 
     // ----------------- Render end of run UI
-    if (cat == nullptr) return;
+    if (cat == nullptr || isFirstCat) return;
     static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     if (isNewCat){
@@ -175,6 +175,7 @@ void MainApp::handleMouseClick(int x, int y) {
         cat->destroy(world->getb2World());
         delete cat;
         isNewCat = true;
+        isFirstCat = false;
     }
     cat = new Cat(x, y, world->getb2World());
 }

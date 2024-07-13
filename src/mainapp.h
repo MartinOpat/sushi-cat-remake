@@ -41,6 +41,7 @@ private:
     Cat *cat;
     bool isDragging = false;
     bool isNewCat = false;
+    bool isFirstCat = true;
 
     // ----------------- Control -----------------
     bool quit = false;
