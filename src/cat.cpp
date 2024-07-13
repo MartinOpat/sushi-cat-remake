@@ -137,7 +137,6 @@ void Cat::setPosition(float x, float y) {
 
     // Update each particle's position to the new center
     for (size_t i = 0; i < particles.size(); ++i) {
-        float angle = i * 2 * M_PI / particles.size();
         float xNew = x + (particles[i]->GetPosition().x - centerX);
         float yNew = y + (particles[i]->GetPosition().y - centerY);
         particles[i]->SetTransform(b2Vec2(xNew, yNew), particles[i]->GetAngle());
@@ -148,7 +147,7 @@ void Cat::setPosition(float x, float y) {
 // -------------------- Rendering --------------------
 
 void Cat::render(SDL_Renderer* renderer) {
-    renderCatParticles(renderer);
+    // renderCatParticles(renderer);
     renderPolygon(renderer);
     renderCatEyes(renderer);
     renderCatLegs(renderer);

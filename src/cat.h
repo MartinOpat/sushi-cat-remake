@@ -18,6 +18,7 @@ public:
     void updateRadius(float newRadius);
 
     float getRadius() {return radius;};
+    std::vector<b2Body*>& getParticles() {return particles;};
 
     void setPosition(float x, float y);
 

@@ -19,6 +19,9 @@ MainApp::MainApp() {
         b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2 + 50/SCALE)
     }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
 
+    // Create a sushi slightly right of the middle of the screen
+    sushis.push_back(new Sushi(b2Vec2(WINDOW_WIDTH/SCALE/2-50/SCALE, WINDOW_HEIGHT/SCALE/2-50/SCALE), world->getb2World()));
+
 
 }
 
@@ -34,10 +37,39 @@ MainApp::~MainApp() {
 void MainApp::run() {
     while (!quit) {
         pollEvents();
+        handleCollisions();
         advanceTime();
         render();
     }
 }
+
+// ----------------- Collision handling -----------------
+
+void MainApp::handleCollisions() {
+    if (cat == nullptr) return;
+    std::vector<Sushi*> sushiesToRemove;
+    for (auto* particle : cat->getParticles()) {
+        for (auto* sushi : sushis) {
+            b2Body* sushiBody = sushi->getb2Body();
+            if (b2TestOverlap(particle->GetFixtureList()->GetShape(), 0, sushiBody->GetFixtureList()->GetShape(), 0, particle->GetTransform(), sushiBody->GetTransform())) {
+                sushiesToRemove.push_back(sushi);
+            }
+        }
+    }
+    // std::cout << "Collisions: " << bodiesToRemove.size() << std::endl;
+
+    // Remove the sushi bodies that were touched
+    for (Sushi* sushi : sushiesToRemove) {
+        world->getb2World()->DestroyBody(sushi->getb2Body());
+        sushis.remove(sushi);
+
+        // Make circle bigger by lengthening the distance joints and increasing radius
+        cat->updateRadius(cat->getRadius()*1.1f);
+    }
+}
+
+// ----------------- Time handling -----------------
+
 
 void MainApp::advanceTime() {
     static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
@@ -56,6 +88,7 @@ void MainApp::render() {
 
     renderWalls();
     renderObstacles();
+    renderSushis();
     renderCat();
 
     SDL_RenderPresent(view->getRenderer());
@@ -76,6 +109,12 @@ void MainApp::renderObstacles() {
 void MainApp::renderCat() {
     if (cat != nullptr)
         cat->render(view->getRenderer());
+}
+
+void MainApp::renderSushis() {
+    for (Sushi* sushi : sushis) {
+        sushi->render(view->getRenderer());
+    }
 }
 
 
@@ -117,6 +156,8 @@ void MainApp::pollEvents() {
         cat->setPosition(newX, CAT_SPAWN_HEIGHT);
     }
 }
+
+
 
 
 

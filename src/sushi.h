@@ -8,6 +8,7 @@ public:
     Sushi(b2Vec2 position, b2World* world);
 
     void render(SDL_Renderer* renderer) override;
+    b2Body* getb2Body() {return body;};
 
 private:
     b2Body* body;

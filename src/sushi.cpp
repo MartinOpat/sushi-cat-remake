@@ -21,7 +21,7 @@ void Sushi::render(SDL_Renderer* renderer) {
     for (int i = 0; i < 4; ++i) {
         vertices[i] = body->GetWorldPoint(box->m_vertices[i]);
     }
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(renderer, 250, 128, 114, SDL_ALPHA_OPAQUE);
     SDL_Rect rect;
     rect.x = (int)(vertices[0].x * SCALE);
     rect.y = (int)(vertices[0].y * SCALE);
