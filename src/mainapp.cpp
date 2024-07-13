@@ -33,19 +33,6 @@ MainApp::MainApp() {
             b2Vec2(-currentLvl->obstacleWidth/2, currentLvl->obstacleHeight/2)/SCALE
             }, world->getb2World(), pos/SCALE, b2_kinematicBody, false, 1.0f));
     }
-
-    // // Create an obstacle in the middle of the screen
-    // obstacles.push_back(new Obstacle({
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2),
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2),
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2 + 50/SCALE),
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2 + 50/SCALE)
-    // }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
-
-    // // Create a sushi slightly right of the middle of the screen
-    // sushis.push_back(new Sushi(b2Vec2(WINDOW_WIDTH/SCALE/2-50/SCALE, WINDOW_HEIGHT/SCALE/2-50/SCALE), world->getb2World()));
-
-
 }
 
 MainApp::~MainApp() {
