@@ -25,6 +25,7 @@ MainApp::~MainApp() {
 
 void MainApp::run() {
     while (!quit) {
+        pollEvents();
         advanceTime();
         render();
     }
@@ -51,6 +52,15 @@ void MainApp::render() {
 void MainApp::renderWalls() {
     for (Wall* wall : walls) {
         wall->render(view->getRenderer());
+    }
+}
+
+void MainApp::pollEvents() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            quit = true;
+        }
     }
 }
 

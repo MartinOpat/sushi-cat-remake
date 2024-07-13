@@ -30,6 +30,7 @@ private:
     // ----------------- Control -----------------
     bool quit = false;
     void advanceTime();
+    void pollEvents();
 
     // ----------------- Rendering -----------------
     void render();
