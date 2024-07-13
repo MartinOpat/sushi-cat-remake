@@ -7,6 +7,7 @@ class World {
 public:
     World();
 
+    b2World* getb2World() { return world; }
 
 private:
     b2Vec2 gravity;

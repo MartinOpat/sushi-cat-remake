@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "globals.h"
+#include "mainapp.h"
 
 // ----------------- Globals -----------------
 int WINDOW_WIDTH = 1600;
@@ -15,6 +16,8 @@ int SUSHI_HEIGHT = 0.5f;
 // -------------------------------------------
 
 int main() {
+    MainApp app;
+    app.run();
 
     return 0;
 }
