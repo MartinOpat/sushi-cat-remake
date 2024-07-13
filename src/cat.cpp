@@ -38,7 +38,7 @@ Cat::Cat(float x, float y, b2World& world) {
 }
 
 // Function to create a circle and return its body
-b2Body* createCircle(b2World& world, float x, float y, float radius) {
+b2Body* Cat::createCircle(b2World& world, float x, float y, float radius) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(x, y);
@@ -55,7 +55,7 @@ b2Body* createCircle(b2World& world, float x, float y, float radius) {
     return body;
 }
 
-b2DistanceJoint *createDistanceJoint(b2World& world, b2Body* bodyA, b2Body* bodyB, float f, float b) {
+b2DistanceJoint* Cat::createDistanceJoint(b2World& world, b2Body* bodyA, b2Body* bodyB, float f, float b) {
     b2DistanceJointDef jb;
 
     jb.bodyA = bodyA;
@@ -154,8 +154,6 @@ void Cat::renderPolygon(SDL_Renderer* renderer) {
     for (auto body = particles.begin(); body != particles.end(); body = next(body)) {
         if ((*body)->GetType() == b2_dynamicBody) {
             b2Vec2 position = (*body)->GetPosition();
-            b2CircleShape* circle = static_cast<b2CircleShape*>((*body)->GetFixtureList()->GetShape());
-            int pixelRadius = static_cast<int>(circle->m_radius * SCALE);
             int centerX = static_cast<int>(position.x * SCALE);
             int centerY = static_cast<int>(position.y * SCALE);
             vx.push_back(centerX);

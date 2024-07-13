@@ -16,7 +16,6 @@ Sushi::Sushi(b2Vec2 position, b2World* world) : Object(position, b2_kinematicBod
 
 
 void Sushi::render(SDL_Renderer* renderer) {
-    b2Vec2 position = body->GetPosition();
     b2PolygonShape* box = static_cast<b2PolygonShape*>(body->GetFixtureList()->GetShape());
     b2Vec2 vertices[4];
     for (int i = 0; i < 4; ++i) {
