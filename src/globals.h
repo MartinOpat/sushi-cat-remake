@@ -31,6 +31,18 @@ inline b2Mat33 operator*(const b2Mat33& A, const b2Mat33& B) {
     return result;
 }
 
+// Define / operator for b2Vec3 and float
+inline b2Vec3 operator/(const b2Vec3& v, float a) {
+    return b2Vec3(v.x / a, v.y / a, v.z / a);
+}
+
+// Define / operator for b2Vec2 and float
+inline b2Vec2 operator/(const b2Vec2& v, float a) {
+    return b2Vec2(v.x / a, v.y / a);
+}
+
+
+
 // Helper function
 inline SDL_Rect box2DToSDL(const b2Vec2& position, float width, float height) {
     SDL_Rect rect;

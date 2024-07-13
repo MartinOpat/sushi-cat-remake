@@ -19,6 +19,7 @@
 #include <set>
 #include <chrono>
 #include <algorithm>
+#include <lvl.h>
 
 class MainApp {
 public:
@@ -55,6 +56,9 @@ private:
     void renderObstacles();
     void renderCat();
     void renderSushis();
+
+    // ----------------- Level -----------------
+    lvl* currentLvl;
 
 };
 

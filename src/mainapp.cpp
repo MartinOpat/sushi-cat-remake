@@ -1,26 +1,49 @@
 #include "mainapp.h"
 
 MainApp::MainApp() {
+    // ----------------- Make world base -----------------
     view = new MainView();
     world = new World();
     cat = nullptr;
 
     // Create 4 walls around the screen to prevent objects from moving out of the screen
-    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Left wall
-    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); // Top wall
-    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); // Right wall
-    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Bottom wall
+    // Left wall
+    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); 
+    // Top wall
+    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); 
+    // Right wall
+    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); 
+    // Bottom wall
+    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
 
-    // Create an obstacle in the middle of the screen
-    obstacles.push_back(new Obstacle({
-        b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2),
-        b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2),
-        b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2 + 50/SCALE),
-        b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2 + 50/SCALE)
-    }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
+    // ----------------- Level loading ----------------- 
+    currentLvl = new lvl(1);
 
-    // Create a sushi slightly right of the middle of the screen
-    sushis.push_back(new Sushi(b2Vec2(WINDOW_WIDTH/SCALE/2-50/SCALE, WINDOW_HEIGHT/SCALE/2-50/SCALE), world->getb2World()));
+    // Create sushis
+    for (b2Vec2 pos : currentLvl->posSushis) {
+        sushis.push_back(new Sushi(pos/SCALE, world->getb2World()));
+    }
+
+    // Create obstacles
+    for (b2Vec2 pos : currentLvl->posObstacles) {
+        obstacles.push_back(new Obstacle({
+            b2Vec2(-currentLvl->obstacleWidth/2, -currentLvl->obstacleHeight/2)/SCALE,
+            b2Vec2(currentLvl->obstacleWidth/2, -currentLvl->obstacleHeight/2)/SCALE,
+            b2Vec2(currentLvl->obstacleWidth/2, currentLvl->obstacleHeight/2)/SCALE,
+            b2Vec2(-currentLvl->obstacleWidth/2, currentLvl->obstacleHeight/2)/SCALE
+            }, world->getb2World(), pos/SCALE, b2_kinematicBody, false, 1.0f));
+    }
+
+    // // Create an obstacle in the middle of the screen
+    // obstacles.push_back(new Obstacle({
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2),
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2),
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2 + 50/SCALE),
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2 + 50/SCALE)
+    // }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
+
+    // // Create a sushi slightly right of the middle of the screen
+    // sushis.push_back(new Sushi(b2Vec2(WINDOW_WIDTH/SCALE/2-50/SCALE, WINDOW_HEIGHT/SCALE/2-50/SCALE), world->getb2World()));
 
 
 }
