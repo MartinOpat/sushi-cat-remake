@@ -19,6 +19,8 @@ public:
 
     float getRadius() {return radius;};
 
+    void setPosition(float x, float y);
+
 private:
     // ----------------- Rendering functions -----------------
     void renderCatParticles(SDL_Renderer* renderer);

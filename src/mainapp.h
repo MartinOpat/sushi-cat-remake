@@ -32,7 +32,9 @@ private:
     std::vector<Wall*> walls;
     std::vector<Obstacle*> obstacles;
 
+    // ----------------- Cat -----------------
     Cat *cat;
+    bool isDragging = false;
 
     // ----------------- Control -----------------
     bool quit = false;

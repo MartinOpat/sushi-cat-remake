@@ -12,6 +12,7 @@ extern float SCALE;
 
 extern int NUM_CAT_PARTICLES;
 extern int BASE_CAT_RADIUS;
+extern int CAT_SPAWN_HEIGHT;
 
 extern int SUSHI_WIDTH;
 extern int SUSHI_HEIGHT;

@@ -125,6 +125,26 @@ void Cat::updateRadius(float newRadius) {
     }
 }
 
+void Cat::setPosition(float x, float y) {
+    // Calculate the center of the circle
+    float centerX = 0.0f, centerY = 0.0f;
+    for (const auto& body : particles) {
+        centerX += body->GetPosition().x;
+        centerY += body->GetPosition().y;
+    }
+    centerX /= particles.size();
+    centerY /= particles.size();
+
+    // Update each particle's position to the new center
+    for (size_t i = 0; i < particles.size(); ++i) {
+        float angle = i * 2 * M_PI / particles.size();
+        float xNew = x + (particles[i]->GetPosition().x - centerX);
+        float yNew = y + (particles[i]->GetPosition().y - centerY);
+        particles[i]->SetTransform(b2Vec2(xNew, yNew), particles[i]->GetAngle());
+        particles[i]->SetLinearVelocity(b2Vec2(0, 0));
+    }
+}
+
 // -------------------- Rendering --------------------
 
 void Cat::render(SDL_Renderer* renderer) {

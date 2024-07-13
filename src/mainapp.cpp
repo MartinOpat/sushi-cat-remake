@@ -12,12 +12,12 @@ MainApp::MainApp() {
     walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Bottom wall
 
     // Create an obstacle in the middle of the screen
-    // obstacles.push_back(new Obstacle({
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2),
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2),
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2 + 50/SCALE),
-    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2 + 50/SCALE)
-    // }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
+    obstacles.push_back(new Obstacle({
+        b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2),
+        b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2),
+        b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2 + 50/SCALE),
+        b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2 + 50/SCALE)
+    }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
 
 
 }
@@ -83,7 +83,8 @@ void MainApp::renderCat() {
 
 void MainApp::handleMouseClick(int x, int y) {
     x = std::max(x, BASE_CAT_RADIUS);
-    y = std::max(y, BASE_CAT_RADIUS);
+    // y = std::max(y, BASE_CAT_RADIUS);
+    y = CAT_SPAWN_HEIGHT;
 
     if (cat != nullptr) {
         cat->destroy(world->getb2World());
@@ -102,7 +103,18 @@ void MainApp::pollEvents() {
             x = event.button.x / SCALE;
             y = event.button.y / SCALE;
             handleMouseClick(x, y);
+            isDragging = true;
+        } else if  (event.type == SDL_MOUSEBUTTONUP) {
+            isDragging = false;
         }
+    }
+
+    if (isDragging) {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        float newX = x / SCALE;
+        newX = std::max(newX, (float)BASE_CAT_RADIUS);
+        cat->setPosition(newX, CAT_SPAWN_HEIGHT);
     }
 }
 
