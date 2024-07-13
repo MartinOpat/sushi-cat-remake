@@ -42,6 +42,7 @@ private:
     bool isDragging = false;
     bool isNewCat = false;
     bool isFirstCat = true;
+    int lastCatSushiEaten = 0;
 
     // ----------------- Control -----------------
     bool quit = false;

@@ -160,7 +160,7 @@ void MainApp::renderUI() {
     } 
     std::chrono::duration<float> elapsed_seconds = now - last;
     if (elapsed_seconds.count() < 2) {
-        view->renderSushiEatenUI(cat->getEatenSushis());
+        view->renderSushiEatenUI(lastCatSushiEaten);
     }
 }
 
@@ -172,6 +172,7 @@ void MainApp::handleMouseClick(int x, int y) {
     y = CAT_SPAWN_HEIGHT;
 
     if (cat != nullptr) {
+        lastCatSushiEaten = cat->getEatenSushis();
         cat->destroy(world->getb2World());
         delete cat;
         isNewCat = true;
