@@ -1,8 +1,8 @@
 #include "box2d-main/include/box2d/box2d.h"
 #include <iostream>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>  // Include SDL2_gfx
-#include <SDL2/SDL_image.h> // Include SDL2_image for texture loading
+#include <SDL2/SDL2_gfxPrimitives.h> 
+#include <SDL2/SDL_image.h>
 #include <vector>
 #include <set>
 #include <algorithm>
@@ -670,7 +670,7 @@ int main(int argc, char* argv[]) {
     obstacleBox2.SetAsBox(3.0f, 0.5f);  // Corrected variable name here
     b2FixtureDef obstacleFixtureDef2;
     obstacleFixtureDef2.shape = &obstacleBox2;
-    obstacleFixtureDef2.density = 1.0f;
+    obstacleFixtureDef2.density = 0.1f;
     obstacleFixtureDef2.friction = 0.3f;
     obstacleBody2->CreateFixture(&obstacleFixtureDef2);
 
@@ -686,6 +686,21 @@ int main(int argc, char* argv[]) {
     b2RevoluteJoint* joint = (b2RevoluteJoint*)world.CreateJoint(&jointDef);
 
     obstacles.push_back(obstacleBody2);
+
+    // // Make an obstacle with a triangle shape
+    // b2BodyDef triangleBodyDef;
+    // triangleBodyDef.type = b2_kinematicBody;
+    // triangleBodyDef.position.Set(30.0f, 10.0f);
+    // b2Body* triangleBody = world.CreateBody(&triangleBodyDef);
+    // b2PolygonShape triangleBox;
+    // std::vector<b2Vec2> vertices(3);
+    // vertices[0].Set(0.0f, 0.0f);
+    // vertices[1].Set(1.0f, 0.0f);
+    // vertices[2].Set(0.5f, 1.0f);
+    // triangleBox.Set(vertices.data(), 3);
+    // b2FixtureDef triangleFixtureDef;
+    // triangleFixtureDef.shape = &triangleBox;
+
 
 
 
