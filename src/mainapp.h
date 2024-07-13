@@ -6,6 +6,7 @@
 #include "world.h"
 #include "wall.h"
 #include "obstacle.h"
+#include "cat.h"
 
 #include "../box2d-main/include/box2d/box2d.h"
 #include <iostream>
@@ -30,15 +31,20 @@ private:
     std::vector<Wall*> walls;
     std::vector<Obstacle*> obstacles;
 
+    Cat *cat;
+
     // ----------------- Control -----------------
     bool quit = false;
     void advanceTime();
+
     void pollEvents();
+    void handleMouseClick(int x, int y);
 
     // ----------------- Rendering -----------------
     void render();
     void renderWalls();
     void renderObstacles();
+    void renderCat();
 
 };
 

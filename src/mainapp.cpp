@@ -3,20 +3,21 @@
 MainApp::MainApp() {
     view = new MainView();
     world = new World();
+    cat = nullptr;
 
     // Create 4 walls around the screen to prevent objects from moving out of the screen
-    walls.push_back(new Wall(0, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT))); // Left wall
-    walls.push_back(new Wall(0, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH, 0))); // Top wall
-    walls.push_back(new Wall(WINDOW_WIDTH, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH, WINDOW_HEIGHT))); // Right wall
-    walls.push_back(new Wall(0, WINDOW_HEIGHT, world->getb2World(), b2Vec2(WINDOW_WIDTH, WINDOW_HEIGHT))); // Bottom wall
+    // walls.push_back(new Wall(0, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Left wall
+    // walls.push_back(new Wall(0, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); // Top wall
+    // walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, WINDOW_HEIGHT/SCALE))); // Right wall
+    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 2, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Bottom wall
 
     // Create an obstacle in the middle of the screen
-    obstacles.push_back(new Obstacle({
-        b2Vec2(WINDOW_WIDTH/2, WINDOW_HEIGHT/2),
-        b2Vec2(WINDOW_WIDTH/2 + 50, WINDOW_HEIGHT/2),
-        b2Vec2(WINDOW_WIDTH/2 + 50, WINDOW_HEIGHT/2 + 50),
-        b2Vec2(WINDOW_WIDTH/2, WINDOW_HEIGHT/2 + 50)
-    }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
+    // obstacles.push_back(new Obstacle({
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2),
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2),
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2 + 50/SCALE, WINDOW_HEIGHT/SCALE/2 + 50/SCALE),
+    //     b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE/2 + 50/SCALE)
+    // }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
 
 
 }
@@ -47,12 +48,15 @@ void MainApp::advanceTime() {
     world->getb2World()->Step(dt, 6, 2); // Step the world forward
 }
 
+// ----------------- Rendering -----------------
+
 void MainApp::render() {
     SDL_SetRenderDrawColor(view->getRenderer(), 100, 100, 100, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(view->getRenderer());
 
     renderWalls();
     renderObstacles();
+    renderCat();
 
     SDL_RenderPresent(view->getRenderer());
 }
@@ -69,13 +73,35 @@ void MainApp::renderObstacles() {
     }
 }
 
+void MainApp::renderCat() {
+    if (cat != nullptr)
+        cat->render(view->getRenderer());
+}
+
+
+// ----------------- Event handling -----------------
+
+void MainApp::handleMouseClick(int x, int y) {
+    if (cat != nullptr) {
+        cat->destroy(world->getb2World());
+        delete cat;
+    }
+    cat = new Cat(x, y, world->getb2World());
+}
+
 void MainApp::pollEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             quit = true;
+        } else if (event.type == SDL_MOUSEBUTTONDOWN) {
+            int x, y;
+            x = event.button.x / SCALE;
+            y = event.button.y / SCALE;
+            handleMouseClick(x, y);
         }
     }
 }
+
 
 

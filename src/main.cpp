@@ -6,7 +6,7 @@
 // ----------------- Globals -----------------
 int WINDOW_WIDTH = 1600;
 int WINDOW_HEIGHT = 1200;
-float SCALE = 1.0f;
+float SCALE = 50.0f;
 
 int NUM_CAT_PARTICLES = 25;
 int BASE_CAT_RADIUS = 1.0f;

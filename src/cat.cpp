@@ -2,12 +2,12 @@
 
 // -------------------- Constructors --------------------
 
-Cat::Cat(float x, float y, b2World& world) {
+Cat::Cat(float x, float y, b2World *world) {
     radius = BASE_CAT_RADIUS;
 
     // Clear previous particles
     for (auto* p : particles) {
-        world.DestroyBody(p);
+        world->DestroyBody(p);
     }
     particles.clear();
     innerJoints.clear();
@@ -16,9 +16,9 @@ Cat::Cat(float x, float y, b2World& world) {
     // Create particles in a circle
     for (int i = 0; i < NUM_CAT_PARTICLES; ++i) {
         float angle = i * 2 * M_PI / NUM_CAT_PARTICLES;
-        float x = x + radius * cos(angle);
-        float y = y + radius * sin(angle);
-        b2Body* particle = createCircle(world, x, y, 0.05f);
+        float centerX = x + radius * cos(angle);
+        float centerY = y + radius * sin(angle);
+        b2Body* particle = createCircle(*world, centerX, centerY, 0.05f);
         particles.push_back(particle);
     }
 
@@ -27,13 +27,19 @@ Cat::Cat(float x, float y, b2World& world) {
     for (int i = 0; i < NUM_CAT_PARTICLES; ++i) {
         b2Body* bodyA = particles[i];
         b2Body* bodyB = particles[(i + 1) % NUM_CAT_PARTICLES];
-        jb = createDistanceJoint(world, bodyA, bodyB, 120.0f, 0);
+        jb = createDistanceJoint(*world, bodyA, bodyB, 120.0f, 0);
         outerJoints.push_back(jb);
         if (i % (NUM_CAT_PARTICLES/20) == 0) {
             b2Body* bodyC = particles[(i + NUM_CAT_PARTICLES/2) % NUM_CAT_PARTICLES];
-            jb = createDistanceJoint(world, bodyA, bodyC, 15.0f, 0.25f);
+            jb = createDistanceJoint(*world, bodyA, bodyC, 15.0f, 0.25f);
             innerJoints.push_back(jb);
         }
+    }
+}
+
+void Cat::destroy(b2World* world) {
+    for (auto* p : particles) {
+        world->DestroyBody(p);
     }
 }
 
