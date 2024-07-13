@@ -2,6 +2,7 @@
 #define OBSTACLE_H
 
 #include <vector>
+#include <iostream>
 
 #include "object.h"
 

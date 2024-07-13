@@ -5,6 +5,7 @@
 #include "mainview.h"
 #include "world.h"
 #include "wall.h"
+#include "obstacle.h"
 
 #include "../box2d-main/include/box2d/box2d.h"
 #include <iostream>
@@ -25,7 +26,9 @@ private:
     // ----------------- Physics Objects -----------------
     MainView *view;
     World *world;
+
     std::vector<Wall*> walls;
+    std::vector<Obstacle*> obstacles;
 
     // ----------------- Control -----------------
     bool quit = false;
@@ -35,6 +38,7 @@ private:
     // ----------------- Rendering -----------------
     void render();
     void renderWalls();
+    void renderObstacles();
 
 };
 

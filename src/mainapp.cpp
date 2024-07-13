@@ -10,6 +10,13 @@ MainApp::MainApp() {
     walls.push_back(new Wall(WINDOW_WIDTH, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH, WINDOW_HEIGHT))); // Right wall
     walls.push_back(new Wall(0, WINDOW_HEIGHT, world->getb2World(), b2Vec2(WINDOW_WIDTH, WINDOW_HEIGHT))); // Bottom wall
 
+    // Create an obstacle in the middle of the screen
+    obstacles.push_back(new Obstacle({
+        b2Vec2(WINDOW_WIDTH/2, WINDOW_HEIGHT/2),
+        b2Vec2(WINDOW_WIDTH/2 + 50, WINDOW_HEIGHT/2),
+        b2Vec2(WINDOW_WIDTH/2 + 50, WINDOW_HEIGHT/2 + 50),
+        b2Vec2(WINDOW_WIDTH/2, WINDOW_HEIGHT/2 + 50)
+    }, world->getb2World(), b2Vec2(0, 0), b2_staticBody));
 
 
 }
@@ -45,6 +52,7 @@ void MainApp::render() {
     SDL_RenderClear(view->getRenderer());
 
     renderWalls();
+    renderObstacles();
 
     SDL_RenderPresent(view->getRenderer());
 }
@@ -52,6 +60,12 @@ void MainApp::render() {
 void MainApp::renderWalls() {
     for (Wall* wall : walls) {
         wall->render(view->getRenderer());
+    }
+}
+
+void MainApp::renderObstacles() {
+    for (Obstacle* obstacle : obstacles) {
+        obstacle->render(view->getRenderer());
     }
 }
 

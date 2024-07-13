@@ -34,7 +34,6 @@ void Obstacle::render(SDL_Renderer* renderer) {
 
             // Draw filled polygon with rotation handled
             filledPolygonRGBA(renderer, vx, vy, vertexCount, 0, 0, 0, 255);
-        
         }
         fixture = fixture->GetNext();
     }
