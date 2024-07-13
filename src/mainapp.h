@@ -40,6 +40,7 @@ private:
     // ----------------- Cat -----------------
     Cat *cat;
     bool isDragging = false;
+    bool isNewCat = false;
 
     // ----------------- Control -----------------
     bool quit = false;
@@ -56,6 +57,7 @@ private:
     void renderObstacles();
     void renderCat();
     void renderSushis();
+    void renderUI();
 
     // ----------------- Level -----------------
     lvl* currentLvl;

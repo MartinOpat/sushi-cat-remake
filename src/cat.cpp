@@ -144,6 +144,11 @@ void Cat::setPosition(float x, float y) {
     }
 }
 
+void Cat::eatSushi() {
+    eatenSushis++;
+    updateRadius(BASE_CAT_RADIUS * 1.1f);
+}
+
 // -------------------- Rendering --------------------
 
 void Cat::render(SDL_Renderer* renderer) {

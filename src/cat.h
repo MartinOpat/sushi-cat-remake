@@ -19,8 +19,10 @@ public:
 
     float getRadius() {return radius;};
     std::vector<b2Body*>& getParticles() {return particles;};
+    int getEatenSushis() {return eatenSushis;};
 
     void setPosition(float x, float y);
+    void eatSushi();
 
 private:
     // ----------------- Rendering functions -----------------
@@ -40,7 +42,9 @@ private:
     std::vector<b2DistanceJoint *> innerJoints;
     std::vector<b2Body*> particles;
 
+    // ----------------- Cat rendering attributes -----------------
     float radius;
+    int eatenSushis = 0;
 };
 
 #endif // CAT_H

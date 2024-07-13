@@ -87,7 +87,7 @@ void MainApp::handleCollisions() {
         delete sushi;
 
         // Make circle bigger by lengthening the distance joints and increasing radius
-        cat->updateRadius(cat->getRadius()*1.1f);
+        cat->eatSushi();
     }
 }
 
@@ -113,6 +113,7 @@ void MainApp::render() {
     renderObstacles();
     renderSushis();
     renderCat();
+    renderUI();
 
     SDL_RenderPresent(view->getRenderer());
 }
@@ -140,6 +141,28 @@ void MainApp::renderSushis() {
     }
 }
 
+void MainApp::renderUI() {
+    // ----------------- Render every frame UI
+    view->renderSushiLeftUI(sushis.size());
+
+    // ----------------- Render end of LVL UI
+    if (sushis.size() == 0) {
+        view->renderLevelWonUI();
+    }
+
+    // ----------------- Render end of run UI
+    if (cat == nullptr) return;
+    static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    if (isNewCat){
+        last = now;
+        isNewCat = false;
+    } 
+    std::chrono::duration<float> elapsed_seconds = now - last;
+    if (elapsed_seconds.count() < 3) {
+        view->renderSushiEatenUI(cat->getEatenSushis());
+    }
+}
 
 // ----------------- Event handling -----------------
 
@@ -151,6 +174,7 @@ void MainApp::handleMouseClick(int x, int y) {
     if (cat != nullptr) {
         cat->destroy(world->getb2World());
         delete cat;
+        isNewCat = true;
     }
     cat = new Cat(x, y, world->getb2World());
 }
