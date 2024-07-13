@@ -15,6 +15,7 @@
 #include <SDL2/SDL_image.h>
 #include <vector>
 #include <chrono>
+#include <algorithm>
 
 class MainApp {
 public:

@@ -6,10 +6,10 @@ MainApp::MainApp() {
     cat = nullptr;
 
     // Create 4 walls around the screen to prevent objects from moving out of the screen
-    // walls.push_back(new Wall(0, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Left wall
-    // walls.push_back(new Wall(0, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); // Top wall
-    // walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, WINDOW_HEIGHT/SCALE))); // Right wall
-    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 2, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Bottom wall
+    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Left wall
+    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); // Top wall
+    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); // Right wall
+    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); // Bottom wall
 
     // Create an obstacle in the middle of the screen
     // obstacles.push_back(new Obstacle({
@@ -82,6 +82,9 @@ void MainApp::renderCat() {
 // ----------------- Event handling -----------------
 
 void MainApp::handleMouseClick(int x, int y) {
+    x = std::max(x, BASE_CAT_RADIUS);
+    y = std::max(y, BASE_CAT_RADIUS);
+
     if (cat != nullptr) {
         cat->destroy(world->getb2World());
         delete cat;
