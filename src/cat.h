@@ -45,6 +45,7 @@ private:
     // ----------------- Cat rendering attributes -----------------
     float radius;
     int eatenSushis = 0;
+    float oldAngle;
 };
 
 #endif // CAT_H

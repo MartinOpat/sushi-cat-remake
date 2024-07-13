@@ -35,6 +35,12 @@ Cat::Cat(float x, float y, b2World *world) {
             innerJoints.push_back(jb);
         }
     }
+
+    b2Body* bodyA = particles[NUM_CAT_PARTICLES/2];
+    b2Body* bodyB = particles[0];
+    b2Vec2 posA = bodyA->GetPosition();
+    b2Vec2 posB = bodyB->GetPosition();
+    oldAngle = atan2(posB.y - posA.y, posB.x - posA.x);
 }
 
 void Cat::destroy(b2World* world) {
@@ -82,6 +88,16 @@ b2DistanceJoint* Cat::createDistanceJoint(b2World& world, b2Body* bodyA, b2Body*
 void Cat::updateRadius(float newRadius) {
     radius = newRadius;
 
+    // Get original rotation, i.e. the angle 
+    // At default rotation 4*NUM_CAT_PARTICLES/6 is at the top, 1*NUM_CAT_PARTICLES/6 is at the bottom
+    b2Body* bodyA = particles[NUM_CAT_PARTICLES/2];
+    b2Body* bodyB = particles[0];
+    b2Vec2 posA = bodyA->GetPosition();
+    b2Vec2 posB = bodyB->GetPosition();
+    oldAngle = atan2(posB.y - posA.y, posB.x - posA.x);
+
+
+
     // Calculate the center of the circle
     float centerX = 0.0f, centerY = 0.0f;
     for (const auto& body : particles) {
@@ -94,8 +110,8 @@ void Cat::updateRadius(float newRadius) {
     // Update each particle's position to the new radius
     for (size_t i = 0; i < particles.size(); ++i) {
         float angle = i * 2 * M_PI / particles.size();
-        float x = centerX + radius * cos(angle);
-        float y = centerY + radius * sin(angle);
+        float x = centerX + radius * cos(angle + oldAngle);
+        float y = centerY + radius * sin(angle + oldAngle);
         particles[i]->SetTransform(b2Vec2(x, y), particles[i]->GetAngle());
     }
 
@@ -152,7 +168,7 @@ void Cat::eatSushi() {
 // -------------------- Rendering --------------------
 
 void Cat::render(SDL_Renderer* renderer) {
-    // renderCatParticles(renderer);
+    renderCatParticles(renderer);
     renderPolygon(renderer);
     renderCatEyes(renderer);
     renderCatLegs(renderer);
@@ -162,17 +178,15 @@ void Cat::render(SDL_Renderer* renderer) {
 
 
 void Cat::renderCatParticles(SDL_Renderer* renderer) {
-        for (auto body = particles.begin(); body != particles.end(); body = next(body)) {
-            if ((*body)->GetType() == b2_dynamicBody) {
-                b2Vec2 position = (*body)->GetPosition();
-                b2CircleShape* circle = static_cast<b2CircleShape*>((*body)->GetFixtureList()->GetShape());
-                int pixelRadius = static_cast<int>(circle->m_radius * SCALE);
-                int centerX = static_cast<int>(position.x * SCALE);
-                int centerY = static_cast<int>(position.y * SCALE);
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-                filledCircleRGBA(renderer, centerX, centerY, pixelRadius, 255, 0, 0, 255); // Draw filled circle
-            }
-        }
+    for (auto body = particles.begin(); body != particles.end(); body = next(body)) {
+        b2Vec2 position = (*body)->GetPosition();
+        b2CircleShape* circle = static_cast<b2CircleShape*>((*body)->GetFixtureList()->GetShape());
+        int pixelRadius = static_cast<int>(circle->m_radius * SCALE);
+        int centerX = static_cast<int>(position.x * SCALE);
+        int centerY = static_cast<int>(position.y * SCALE);
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+        filledCircleRGBA(renderer, centerX, centerY, pixelRadius, 255, 0, 0, 255); // Draw filled circle
+    }
 }
 
 void Cat::renderPolygon(SDL_Renderer* renderer) {
