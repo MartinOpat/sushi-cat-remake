@@ -6,7 +6,7 @@
 #include "world.h"
 #include "wall.h"
 
-#include "box2d-main/include/box2d/box2d.h"
+#include "../box2d-main/include/box2d/box2d.h"
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h> 

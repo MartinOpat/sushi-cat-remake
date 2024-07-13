@@ -12,6 +12,7 @@
 class Object {
 public:
     Object(b2Vec2 position, b2BodyType type, bool fixedRotation = false, float angVel = 0, float gravityScale = 1.0f);
+    virtual ~Object() {}
 
     virtual void render(SDL_Renderer* renderer) = 0;
 
