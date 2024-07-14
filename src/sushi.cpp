@@ -17,13 +17,25 @@ Sushi::Sushi(b2Vec2 position, b2World* world) : Object(position, b2_kinematicBod
 void Sushi::loadTextures(SDL_Renderer* renderer) {
     switch (rand() % 3) {
         case 0:
-            sushiTex = loadTexture(renderer, "icons/futomaki.png");
+            #ifdef _WIN32
+                sushiTex = loadTexture(renderer, "icons\\futomaki.png");
+            #else
+                sushiTex = loadTexture(renderer, "icons/futomaki.png");
+            #endif
             break;
         case 1:
-            sushiTex = loadTexture(renderer, "icons/ikura.png");
+            #ifdef _WIN32
+                sushiTex = loadTexture(renderer, "icons\\ikura.png");
+            #else
+                sushiTex = loadTexture(renderer, "icons/ikura.png");
+            #endif
             break;
         case 2:
-            sushiTex = loadTexture(renderer, "icons/nigiri.png");
+            #ifdef _WIN32
+                sushiTex = loadTexture(renderer, "icons\\nigiri.png");
+            #else
+                sushiTex = loadTexture(renderer, "icons/nigiri.png");
+            #endif
             break;
     }
 }

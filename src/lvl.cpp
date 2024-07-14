@@ -4,10 +4,14 @@ lvl::lvl(int num) {
     switch (num) {
         case 1:
             // ----------------- Cat -----------------
-            catCount = 6;
+            catCount = 9;
 
             // ----------------- Background -----------------
-            bgTexPath = "icons/bg1.jpg";
+            #ifdef _WIN32
+                bgTexPath = "icons\\bg1.jpg";
+            #else
+                bgTexPath = "icons/bg1.jpg";
+            #endif
 
             // ----------------- Sushi -----------------
             // First column
@@ -30,6 +34,11 @@ lvl::lvl(int num) {
             posSushis.push_back(b2Vec2(1200, 400));
             posSushis.push_back(b2Vec2(1200, 700));
             posSushis.push_back(b2Vec2(1200, 1000));
+
+            // Fifth column
+            posSushis.push_back(b2Vec2(1500, 400));
+            posSushis.push_back(b2Vec2(1500, 700));
+            posSushis.push_back(b2Vec2(1500, 1000));
 
             // ----------------- Kinematic Obstacles -----------------
             kinObsWidth = 200;
@@ -59,6 +68,13 @@ lvl::lvl(int num) {
                 b2Vec2(-100, 10) / SCALE
             });
             
+            posKinObs.push_back(b2Vec2(1600, 500) / SCALE);
+            vertKinObs.push_back({
+                b2Vec2(-100, -10) / SCALE,
+                b2Vec2(100, -10) / SCALE,
+                b2Vec2(100, 10) / SCALE,
+                b2Vec2(-100, 10) / SCALE
+            });
 
             break;
 

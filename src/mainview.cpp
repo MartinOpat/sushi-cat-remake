@@ -23,7 +23,7 @@ MainView::~MainView() {
 void MainView::renderSushiLeftUI(int sushisLeft) {
     // Small number in the top right corner
     SDL_Color color = {255, 255, 255, 255};
-    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/fonts-japanese-gothic.ttf", 24);
+    TTF_Font* font = TTF_OpenFont("Arial.ttf", 24);
     std::string text = std::to_string(sushisLeft) + " sushi left";
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -44,7 +44,7 @@ void MainView::renderSushiLeftUI(int sushisLeft) {
 void MainView::renderSushiEatenUI(int sushisEaten) {
     // Display how many sushies were eaten like: "x sushi eaten" onto upper center of the screen
     SDL_Color color = {255, 255, 255, 255};
-    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/fonts-japanese-gothic.ttf", 56);
+    TTF_Font* font = TTF_OpenFont("Arial.ttf", 56);
     std::string text = std::to_string(sushisEaten) + " sushi eaten";
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -64,7 +64,7 @@ void MainView::renderSushiEatenUI(int sushisEaten) {
 
 void MainView::renderLevelWonUI() {
     SDL_Color color = {255, 255, 255, 255};
-    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/fonts-japanese-gothic.ttf", 64);
+    TTF_Font* font = TTF_OpenFont("Arial.ttf", 64);
     SDL_Surface* surface = TTF_RenderText_Solid(font, "Full belly achieved!", color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -83,7 +83,7 @@ void MainView::renderLevelWonUI() {
 
 void MainView::renderLevelLostUI() {
     SDL_Color color = {255, 255, 255, 255};
-    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/fonts-japanese-gothic.ttf", 64);
+    TTF_Font* font = TTF_OpenFont("Arial.ttf", 64);
     SDL_Surface* surface = TTF_RenderText_Solid(font, "Still hungry!", color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -113,7 +113,7 @@ void MainView::renderBackground() {
 void MainView::renderCatsLeftUI(int catsLeft) {
     // Small number in the top right corner
     SDL_Color color = {255, 255, 255, 255};
-    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/fonts-japanese-gothic.ttf", 24);
+    TTF_Font* font = TTF_OpenFont("Arial.ttf", 24);
     std::string text = "Cats: " + std::to_string(catsLeft) + " x";
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);

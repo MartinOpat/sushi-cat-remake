@@ -1,7 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "../box2d-main/include/box2d/box2d.h"
+#include <box2d/box2d.h>
 #include "globals.h"
 
 #include <SDL2/SDL.h>

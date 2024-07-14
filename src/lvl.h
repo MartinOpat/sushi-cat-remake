@@ -1,7 +1,7 @@
 #ifndef LVL_H
 #define LVL_H
 
-#include "../box2d-main/include/box2d/box2d.h"
+#include <box2d/box2d.h>
 #include "globals.h"
 
 #include <vector>

@@ -30,3 +30,22 @@
 *.exe
 *.out
 *.app
+
+# Dependant libraries
+SDL2/
+SDL2/*
+
+SDL2_image/
+SDL2_image/*
+
+SDL2_ttf/
+SDL2_ttf/*
+
+SDL2_gfx/
+SDL2_gfx/*
+
+box2d-main/
+box2d-main/*
+
+box2d-win/
+box2d-win/*

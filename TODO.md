@@ -1,0 +1,7 @@
+- Compile for Windows
+- Do menu with:
+    - Explanations
+    - Level picker
+- Add readme with
+    - Running instructions
+    - Compilation instructions

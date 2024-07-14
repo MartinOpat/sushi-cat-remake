@@ -1,9 +1,10 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include "../box2d-main/include/box2d/box2d.h"
+#include <box2d/box2d.h>
 
 #include <SDL2/SDL.h>
+// #include "../SDL2/x86_64-w64-mingw32/include/SDL2/SDL.h"
 #include <SDL2/SDL_image.h>
 #include <iostream>
 

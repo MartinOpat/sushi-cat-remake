@@ -205,6 +205,7 @@ void MainApp::renderUI() {
 
 void MainApp::handleMouseClick(int x, int y) {
     x = std::max(x, BASE_CAT_RADIUS);
+    x = std::min(x, (int)(WINDOW_WIDTH/SCALE) - BASE_CAT_RADIUS);
     y = CAT_SPAWN_HEIGHT;
 
     cat = new Cat(x, y, world->getb2World());
@@ -251,6 +252,7 @@ void MainApp::pollEvents() {
         SDL_GetMouseState(&x, &y);
         float newX = x / SCALE;
         newX = std::max(newX, (float)BASE_CAT_RADIUS);
+        newX = std::min(newX, WINDOW_WIDTH/SCALE - BASE_CAT_RADIUS);
         cat->setPosition(newX, CAT_SPAWN_HEIGHT);
     }
 }
