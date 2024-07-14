@@ -64,7 +64,7 @@ private:
     void renderUI();
 
     // ----------------- Level -----------------
-    lvl* currentLvl;
+    lvl* currLvl;
 
 };
 

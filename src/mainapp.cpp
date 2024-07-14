@@ -17,21 +17,21 @@ MainApp::MainApp() {
     walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
 
     // ----------------- Level loading ----------------- 
-    currentLvl = new lvl(2);
+    currLvl = new lvl(1);
 
     // Create sushis
-    for (b2Vec2 pos : currentLvl->posSushis) {
+    for (b2Vec2& pos : currLvl->posSushis) {
         sushis.push_back(new Sushi(pos/SCALE, world->getb2World()));
     }
 
-    // Create obstacles
-    for (b2Vec2 pos : currentLvl->posKinematicObstacles) {
-        kinematicObstacles.push_back(new Obstacle({
-            b2Vec2(-currentLvl->kinematicObstacleWidth/2, -currentLvl->kinematicObstacleHeight/2)/SCALE,
-            b2Vec2(currentLvl->kinematicObstacleWidth/2, -currentLvl->kinematicObstacleHeight/2)/SCALE,
-            b2Vec2(currentLvl->kinematicObstacleWidth/2, currentLvl->kinematicObstacleHeight/2)/SCALE,
-            b2Vec2(-currentLvl->kinematicObstacleWidth/2, currentLvl->kinematicObstacleHeight/2)/SCALE
-            }, world->getb2World(), pos/SCALE, b2_kinematicBody, false, 1.0f));
+    // Create kinematic obstacles
+    for (size_t i = 0; i < currLvl->posKinObs.size(); i++){
+        kinematicObstacles.push_back(new Obstacle((currLvl->vertKinObs)[i],
+            world->getb2World(),
+            (currLvl->posKinObs)[i],
+            b2_kinematicBody, 
+            false, 
+            1.0f));
     }
 
 
