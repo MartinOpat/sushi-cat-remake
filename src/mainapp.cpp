@@ -39,9 +39,6 @@ MainApp::MainApp() {
             1.0f));
     }
 
-
-
-
 }
 
 MainApp::~MainApp() {
@@ -135,8 +132,6 @@ void MainApp::advanceTime() {
 // ----------------- Rendering -----------------
 
 void MainApp::render() {
-    // SDL_SetRenderDrawColor(view->getRenderer(), 100, 100, 100, SDL_ALPHA_OPAQUE);
-    // SDL_RenderClear(view->getRenderer());
     view->renderBackground();
 
     renderWalls();
