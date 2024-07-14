@@ -182,7 +182,7 @@ void MainApp::renderUI() {
     }
 
     // ----------------- Render end of run UI
-    if (cat == nullptr || isFirstCat) return;
+    if (isFirstCat) return;
     static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     if (isNewCat){
@@ -199,17 +199,24 @@ void MainApp::renderUI() {
 
 void MainApp::handleMouseClick(int x, int y) {
     x = std::max(x, BASE_CAT_RADIUS);
-    // y = std::max(y, BASE_CAT_RADIUS);
     y = CAT_SPAWN_HEIGHT;
 
-    if (cat != nullptr) {
-        lastCatSushiEaten = cat->getEatenSushis();
-        cat->destroy(world->getb2World());
-        delete cat;
-        isNewCat = true;
-        isFirstCat = false;
-    }
     cat = new Cat(x, y, world->getb2World());
+    newCatReady = false;
+}
+
+void MainApp::handleKeyPress(SDL_Keycode key) {
+    if (key == SDLK_SPACE) {
+        if (cat != nullptr) {
+            lastCatSushiEaten = cat->getEatenSushis();
+            cat->destroy(world->getb2World());
+            delete cat;
+            isNewCat = true;
+            isFirstCat = false;
+            newCatReady = true;
+        }
+    }
+    cat = nullptr;
 }
 
 void MainApp::pollEvents() {
@@ -221,10 +228,14 @@ void MainApp::pollEvents() {
             int x, y;
             x = event.button.x / SCALE;
             y = event.button.y / SCALE;
+
+            if (!newCatReady) return;
             handleMouseClick(x, y);
             isDragging = true;
         } else if  (event.type == SDL_MOUSEBUTTONUP) {
             isDragging = false;
+        } else if (event.type == SDL_KEYDOWN) {
+            handleKeyPress(event.key.keysym.sym);
         }
     }
 

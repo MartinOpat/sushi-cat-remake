@@ -45,6 +45,7 @@ private:
     bool isNewCat = false;
     bool isFirstCat = true;
     int lastCatSushiEaten = 0;
+    bool newCatReady = true;
 
     // ----------------- Control -----------------
     bool quit = false;
@@ -52,6 +53,7 @@ private:
 
     void pollEvents();
     void handleMouseClick(int x, int y);
+    void handleKeyPress(SDL_Keycode key);
 
     void handleCollisions();
 
