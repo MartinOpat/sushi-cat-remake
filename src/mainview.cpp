@@ -9,6 +9,9 @@ MainView::MainView() {
                                           WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    // #ifdef __WIN32__
+    //     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+    // #endif
     // ----------------- Load font -----------------
     TTF_Init();
 }
