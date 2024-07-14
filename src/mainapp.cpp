@@ -57,11 +57,23 @@ MainApp::~MainApp() {
 }
 
 void MainApp::run() {
+    const int FPS = 60;
+    const int frameDelay = 1000 / FPS; // Milliseconds per frame
+    Uint32 frameStart;
+    int frameTime;
+
     while (!quit) {
+        frameStart = SDL_GetTicks();
+
         pollEvents();
         handleCollisions();
         advanceTime();
         render();
+
+        frameTime = SDL_GetTicks() - frameStart;
+        if (frameDelay > frameTime) {
+            SDL_Delay(frameDelay - frameTime);
+        }
     }
 }
 

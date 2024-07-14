@@ -168,7 +168,7 @@ void Cat::eatSushi() {
 // -------------------- Rendering --------------------
 
 void Cat::render(SDL_Renderer* renderer) {
-    renderCatParticles(renderer);
+    // renderCatParticles(renderer);
     renderPolygon(renderer);
     renderCatEyes(renderer);
     renderCatLegs(renderer);
