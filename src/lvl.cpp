@@ -3,6 +3,9 @@
 lvl::lvl(int num) {
     switch (num) {
         case 1:
+            // ----------------- Background -----------------
+            bgTexPath = "icons/bg1.jpg";
+
             // ----------------- Sushi -----------------
             // First column
             posSushis.push_back(b2Vec2(300, 400));

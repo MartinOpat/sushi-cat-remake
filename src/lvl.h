@@ -5,7 +5,7 @@
 #include "globals.h"
 
 #include <vector>
-
+#include <string>
 
 class lvl {
 public:
@@ -19,6 +19,9 @@ public:
     std::vector<std::vector<b2Vec2>> vertKinObs;
     float kinObsWidth;
     float kinObsHeight;
+
+    // ----------------- Textures -----------------
+    std::string bgTexPath = "";
 };
 
 #endif // LVL_H

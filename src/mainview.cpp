@@ -3,7 +3,7 @@
 MainView::MainView() {
     // ----------------- Initialize SDL -----------------
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
-    IMG_Init(IMG_INIT_PNG);
+    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
     window = SDL_CreateWindow("Box2D and SDL2 Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                           WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -78,4 +78,19 @@ void MainView::renderLevelWonUI() {
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
     TTF_CloseFont(font);
+}
+
+void MainView::renderBackground() {
+    if (isBgLoaded) {
+        SDL_RenderCopy(renderer, bgTexture, NULL, NULL);
+    } else {
+        SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+        SDL_RenderClear(renderer);
+    }
+
+}
+
+void MainView::setBackground(std::string bgTex) {
+    bgTexture = IMG_LoadTexture(renderer, bgTex.c_str());
+    isBgLoaded = true;
 }

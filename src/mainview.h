@@ -20,10 +20,17 @@ public:
     void renderSushiLeftUI(int sushisLeft);
     void renderSushiEatenUI(int sushisEaten);
     void renderLevelWonUI();
+    void renderBackground();
 
+    void setBackground(std::string bgTex);
 private:
+    //  ----------------- SDL -----------------
     SDL_Window* window;
     SDL_Renderer* renderer;
+
+    //  ----------------- Textures -----------------
+    SDL_Texture* bgTexture;
+    bool isBgLoaded = false;
 };
 
 #endif // MAINVIEW_H

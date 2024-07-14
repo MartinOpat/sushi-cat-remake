@@ -1,8 +1,14 @@
 #include "mainapp.h"
 
 MainApp::MainApp() {
-    // ----------------- Make world base -----------------
+    // ----------------- Level selection ----------------- 
+    currLvl = new lvl(1);
+
+    // ----------------- Initialize Graphics -----------------
     view = new MainView();
+    view->setBackground(currLvl->bgTexPath);
+
+    // ----------------- Make world base -----------------
     world = new World();
     cat = nullptr;
 
@@ -16,9 +22,8 @@ MainApp::MainApp() {
     // Bottom wall
     walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
 
-    // ----------------- Level loading ----------------- 
-    currLvl = new lvl(1);
 
+    // ----------------- Level loading ----------------- 
     // Create sushis
     for (b2Vec2& pos : currLvl->posSushis) {
         sushis.push_back(new Sushi(pos/SCALE, world->getb2World()));
@@ -130,8 +135,9 @@ void MainApp::advanceTime() {
 // ----------------- Rendering -----------------
 
 void MainApp::render() {
-    SDL_SetRenderDrawColor(view->getRenderer(), 100, 100, 100, SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(view->getRenderer());
+    // SDL_SetRenderDrawColor(view->getRenderer(), 100, 100, 100, SDL_ALPHA_OPAQUE);
+    // SDL_RenderClear(view->getRenderer());
+    view->renderBackground();
 
     renderWalls();
     renderObstacles();
