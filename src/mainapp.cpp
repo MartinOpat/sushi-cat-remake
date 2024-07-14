@@ -24,6 +24,9 @@ MainApp::MainApp() {
 
 
     // ----------------- Level loading ----------------- 
+    // Init cats
+    catsLeft = currLvl->catCount;
+
     // Create sushis
     for (b2Vec2& pos : currLvl->posSushis) {
         sushis.push_back(new Sushi(pos/SCALE, world->getb2World()));
@@ -175,10 +178,13 @@ void MainApp::renderSushis() {
 void MainApp::renderUI() {
     // ----------------- Render every frame UI
     view->renderSushiLeftUI(sushis.size());
+    view->renderCatsLeftUI(catsLeft);
 
     // ----------------- Render end of LVL UI
     if (sushis.size() == 0) {
         view->renderLevelWonUI();
+    } else if (catsLeft <= 0 && cat == nullptr) {
+        view->renderLevelLostUI();
     }
 
     // ----------------- Render end of run UI
@@ -203,6 +209,7 @@ void MainApp::handleMouseClick(int x, int y) {
 
     cat = new Cat(x, y, world->getb2World());
     newCatReady = false;
+    catsLeft--;
 }
 
 void MainApp::handleKeyPress(SDL_Keycode key) {
@@ -229,7 +236,7 @@ void MainApp::pollEvents() {
             x = event.button.x / SCALE;
             y = event.button.y / SCALE;
 
-            if (!newCatReady) return;
+            if (!newCatReady || catsLeft <= 0) return;
             handleMouseClick(x, y);
             isDragging = true;
         } else if  (event.type == SDL_MOUSEBUTTONUP) {

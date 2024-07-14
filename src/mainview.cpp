@@ -81,6 +81,25 @@ void MainView::renderLevelWonUI() {
     TTF_CloseFont(font);
 }
 
+void MainView::renderLevelLostUI() {
+    SDL_Color color = {255, 255, 255, 255};
+    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/fonts-japanese-gothic.ttf", 64);
+    SDL_Surface* surface = TTF_RenderText_Solid(font, "Still hungry!", color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    SDL_Rect rect;
+    rect.x = WINDOW_WIDTH/2 - surface->w/2;
+    rect.y = WINDOW_HEIGHT/2 - surface->h/2;
+    rect.w = surface->w;
+    rect.h = surface->h;
+
+    SDL_RenderCopy(renderer, texture, NULL, &rect);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+    TTF_CloseFont(font);
+}
+
 void MainView::renderBackground() {
     if (isBgLoaded) {
         SDL_RenderCopy(renderer, bgTexture, NULL, NULL);
@@ -89,6 +108,27 @@ void MainView::renderBackground() {
         SDL_RenderClear(renderer);
     }
 
+}
+
+void MainView::renderCatsLeftUI(int catsLeft) {
+    // Small number in the top right corner
+    SDL_Color color = {255, 255, 255, 255};
+    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/fonts-japanese-gothic.ttf", 24);
+    std::string text = "Cats: " + std::to_string(catsLeft) + " x";
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    SDL_Rect rect;
+    rect.x = 10;
+    rect.y = 10;
+    rect.w = surface->w;
+    rect.h = surface->h;
+
+    SDL_RenderCopy(renderer, texture, NULL, &rect);
+
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+    TTF_CloseFont(font);
 }
 
 void MainView::setBackground(std::string bgTex) {

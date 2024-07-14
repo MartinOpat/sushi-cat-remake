@@ -3,6 +3,9 @@
 lvl::lvl(int num) {
     switch (num) {
         case 1:
+            // ----------------- Cat -----------------
+            catCount = 6;
+
             // ----------------- Background -----------------
             bgTexPath = "icons/bg1.jpg";
 

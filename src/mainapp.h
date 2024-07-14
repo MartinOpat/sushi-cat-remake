@@ -46,6 +46,7 @@ private:
     bool isFirstCat = true;
     int lastCatSushiEaten = 0;
     bool newCatReady = true;
+    int catsLeft = 0;
 
     // ----------------- Control -----------------
     bool quit = false;

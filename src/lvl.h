@@ -11,8 +11,9 @@ class lvl {
 public:
     lvl(int num);
     
-    // ----------------- Sushi -----------------
+    // ----------------- Sushi cat -----------------
     std::vector<b2Vec2> posSushis;
+    int catCount;
 
     // ----------------- Kinematic Obstacles -----------------
     std::vector<b2Vec2> posKinObs;

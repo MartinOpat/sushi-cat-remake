@@ -20,7 +20,9 @@ public:
     void renderSushiLeftUI(int sushisLeft);
     void renderSushiEatenUI(int sushisEaten);
     void renderLevelWonUI();
+    void renderLevelLostUI();
     void renderBackground();
+    void renderCatsLeftUI(int catsLeft);
 
     void setBackground(std::string bgTex);
 private:
