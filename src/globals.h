@@ -4,6 +4,8 @@
 #include "../box2d-main/include/box2d/box2d.h"
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <iostream>
 
 
 extern int WINDOW_WIDTH;
@@ -51,6 +53,24 @@ inline SDL_Rect box2DToSDL(const b2Vec2& position, float width, float height) {
     rect.w = (int)(width * SCALE);
     rect.h = (int)(height * SCALE);
     return rect;
+}
+
+inline SDL_Texture* loadTexture(SDL_Renderer* renderer, const char* filename) {
+    SDL_Surface* surface = IMG_Load(filename);
+    if (!surface) {
+        std::cerr << "Error loading texture: " << IMG_GetError() << std::endl;
+        exit(1);
+    }
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_FreeSurface(surface);
+
+    if (!texture) {
+        std::cerr << "Error creating texture: " << SDL_GetError() << std::endl;
+        exit(1);
+    }
+
+    return texture;
 }
 
 #endif // GLOBALS_H

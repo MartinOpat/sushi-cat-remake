@@ -14,18 +14,37 @@ Sushi::Sushi(b2Vec2 position, b2World* world) : Object(position, b2_kinematicBod
     body->CreateFixture(&fixtureDef);
 }
 
+void Sushi::loadTextures(SDL_Renderer* renderer) {
+    switch (rand() % 3) {
+        case 0:
+            sushiTex = loadTexture(renderer, "icons/futomaki.png");
+            break;
+        case 1:
+            sushiTex = loadTexture(renderer, "icons/ikura.png");
+            break;
+        case 2:
+            sushiTex = loadTexture(renderer, "icons/nigiri.png");
+            break;
+    }
+}
+
 
 void Sushi::render(SDL_Renderer* renderer) {
-    b2PolygonShape* box = static_cast<b2PolygonShape*>(body->GetFixtureList()->GetShape());
-    b2Vec2 vertices[4];
-    for (int i = 0; i < 4; ++i) {
-        vertices[i] = body->GetWorldPoint(box->m_vertices[i]);
-    }
-    SDL_SetRenderDrawColor(renderer, 250, 128, 114, SDL_ALPHA_OPAQUE);
-    SDL_Rect rect;
-    rect.x = (int)(vertices[0].x * SCALE);
-    rect.y = (int)(vertices[0].y * SCALE);
-    rect.w = (int)((vertices[2].x - vertices[0].x) * SCALE);
-    rect.h = (int)((vertices[2].y - vertices[0].y) * SCALE);
-    SDL_RenderFillRect(renderer, &rect);
+    // b2PolygonShape* box = static_cast<b2PolygonShape*>(body->GetFixtureList()->GetShape());
+    // b2Vec2 vertices[4];
+    // for (int i = 0; i < 4; ++i) {
+    //     vertices[i] = body->GetWorldPoint(box->m_vertices[i]);
+    // }
+    // SDL_SetRenderDrawColor(renderer, 250, 128, 114, SDL_ALPHA_OPAQUE);
+    // SDL_Rect rect;
+    // rect.x = (int)(vertices[0].x * SCALE);
+    // rect.y = (int)(vertices[0].y * SCALE);
+    // rect.w = (int)((vertices[2].x - vertices[0].x) * SCALE);
+    // rect.h = (int)((vertices[2].y - vertices[0].y) * SCALE);
+    // SDL_RenderFillRect(renderer, &rect);
+
+    // Alternative version where we draw the sushi as a texture
+    if (sushiTex == nullptr) loadTextures(renderer);
+    SDL_Rect dest = box2DToSDL(body->GetPosition(), 1.0f, 1.0f);
+    SDL_RenderCopy(renderer, sushiTex, NULL, &dest);
 }
