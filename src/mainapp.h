@@ -34,7 +34,9 @@ private:
     World *world;
 
     std::vector<Wall*> walls;
-    std::vector<Obstacle*> obstacles;
+    std::vector<Obstacle*> kinematicObstacles;
+    std::vector<Obstacle*> staticObstacles;
+    std::vector<Obstacle*> dynamicObstacles;
     std::list<Sushi*> sushis;
 
     // ----------------- Cat -----------------

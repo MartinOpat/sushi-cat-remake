@@ -17,7 +17,7 @@ MainApp::MainApp() {
     walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
 
     // ----------------- Level loading ----------------- 
-    currentLvl = new lvl(1);
+    currentLvl = new lvl(2);
 
     // Create sushis
     for (b2Vec2 pos : currentLvl->posSushis) {
@@ -25,14 +25,18 @@ MainApp::MainApp() {
     }
 
     // Create obstacles
-    for (b2Vec2 pos : currentLvl->posObstacles) {
-        obstacles.push_back(new Obstacle({
-            b2Vec2(-currentLvl->obstacleWidth/2, -currentLvl->obstacleHeight/2)/SCALE,
-            b2Vec2(currentLvl->obstacleWidth/2, -currentLvl->obstacleHeight/2)/SCALE,
-            b2Vec2(currentLvl->obstacleWidth/2, currentLvl->obstacleHeight/2)/SCALE,
-            b2Vec2(-currentLvl->obstacleWidth/2, currentLvl->obstacleHeight/2)/SCALE
+    for (b2Vec2 pos : currentLvl->posKinematicObstacles) {
+        kinematicObstacles.push_back(new Obstacle({
+            b2Vec2(-currentLvl->kinematicObstacleWidth/2, -currentLvl->kinematicObstacleHeight/2)/SCALE,
+            b2Vec2(currentLvl->kinematicObstacleWidth/2, -currentLvl->kinematicObstacleHeight/2)/SCALE,
+            b2Vec2(currentLvl->kinematicObstacleWidth/2, currentLvl->kinematicObstacleHeight/2)/SCALE,
+            b2Vec2(-currentLvl->kinematicObstacleWidth/2, currentLvl->kinematicObstacleHeight/2)/SCALE
             }, world->getb2World(), pos/SCALE, b2_kinematicBody, false, 1.0f));
     }
+
+
+
+
 }
 
 MainApp::~MainApp() {
@@ -40,7 +44,15 @@ MainApp::~MainApp() {
         world->getb2World()->DestroyBody(wall->getb2Body());
         delete wall;
     }
-    for (Obstacle* obstacle : obstacles) {
+    for (Obstacle* obstacle : kinematicObstacles) {
+        world->getb2World()->DestroyBody(obstacle->getb2Body());
+        delete obstacle;
+    }
+    for (Obstacle* obstacle : staticObstacles) {
+        world->getb2World()->DestroyBody(obstacle->getb2Body());
+        delete obstacle;
+    }
+    for (Obstacle* obstacle : dynamicObstacles) {
         world->getb2World()->DestroyBody(obstacle->getb2Body());
         delete obstacle;
     }
@@ -137,7 +149,13 @@ void MainApp::renderWalls() {
 }
 
 void MainApp::renderObstacles() {
-    for (Obstacle* obstacle : obstacles) {
+    for (Obstacle* obstacle : kinematicObstacles) {
+        obstacle->render(view->getRenderer());
+    }
+    for (Obstacle* obstacle : staticObstacles) {
+        obstacle->render(view->getRenderer());
+    }
+    for (Obstacle* obstacle : dynamicObstacles) {
         obstacle->render(view->getRenderer());
     }
 }

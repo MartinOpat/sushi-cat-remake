@@ -8,7 +8,7 @@ lvl::lvl(int num) {
             posSushis.push_back(b2Vec2(300, 700));
             posSushis.push_back(b2Vec2(300, 1000));
 
-            posObstacles.push_back(b2Vec2(450, 300));
+            posKinematicObstacles.push_back(b2Vec2(450, 300));
 
 
             // Second column
@@ -22,7 +22,7 @@ lvl::lvl(int num) {
             posSushis.push_back(b2Vec2(900, 700));
             posSushis.push_back(b2Vec2(900, 1000));
 
-            posObstacles.push_back(b2Vec2(1050, 300));
+            posKinematicObstacles.push_back(b2Vec2(1050, 300));
 
             // Fourth column
             posSushis.push_back(b2Vec2(1200, 400));
@@ -31,9 +31,15 @@ lvl::lvl(int num) {
 
 
 
-            obstacleWidth = 200;
-            obstacleHeight = 25;
+            kinematicObstacleWidth = 200;
+            kinematicObstacleHeight = 25;
             break;
+
+        case 2:
+            // Windmill in the middle
+            posKinematicObstacles.push_back(b2Vec2(WINDOW_WIDTH/2, WINDOW_HEIGHT/2));
+            kinematicObstacleHeight = 200;
+            kinematicObstacleWidth = 200;
 
         default:
             break;
