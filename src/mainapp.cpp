@@ -225,18 +225,22 @@ void MainApp::handleMouseClick(int x, int y) {
     catsLeft--;
 }
 
-void MainApp::handleKeyPress(SDL_Keycode key) {
-    if (key == SDLK_SPACE) {
-        if (cat != nullptr) {
-            lastCatSushiEaten = cat->getEatenSushis();
-            cat->destroy(world->getb2World());
-            delete cat;
-            isNewCat = true;
-            isFirstCat = false;
-            newCatReady = true;
-        }
+void MainApp::handleKeyPressSpace() {
+    if (cat != nullptr) {
+        lastCatSushiEaten = cat->getEatenSushis();
+        cat->destroy(world->getb2World());
+        delete cat;
+        isNewCat = true;
+        isFirstCat = false;
+        newCatReady = true;
     }
     cat = nullptr;
+}
+
+void MainApp::handleKeyPress(SDL_Keycode key) {
+    if (key == SDLK_SPACE) {
+        handleKeyPressSpace();
+    }
 }
 
 void MainApp::pollEvents() {
@@ -266,6 +270,10 @@ void MainApp::pollEvents() {
         newX = std::max(newX, (float)BASE_CAT_RADIUS);
         newX = std::min(newX, WINDOW_WIDTH/SCALE - BASE_CAT_RADIUS);
         cat->setPosition(newX, CAT_SPAWN_HEIGHT);
+    }
+
+    if (cat != nullptr && cat->isOffscreen()) {
+        handleKeyPressSpace();
     }
 }
 

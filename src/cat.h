@@ -24,6 +24,8 @@ public:
     void setPosition(float x, float y);
     void eatSushi();
 
+    bool isOffscreen() {return particles[0]->GetPosition().y > WINDOW_HEIGHT/SCALE;};
+
 private:
     // ----------------- Rendering functions -----------------
     void renderCatParticles(SDL_Renderer* renderer);

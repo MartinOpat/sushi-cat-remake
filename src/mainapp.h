@@ -69,6 +69,9 @@ private:
     // ----------------- Level -----------------
     lvl* currLvl;
 
+    // ----------------- Specific keypresses -----------------
+    void handleKeyPressSpace();
+
 };
 
 #endif // MAINAPP_H
