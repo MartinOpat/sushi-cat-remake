@@ -17,6 +17,8 @@ int CAT_SPAWN_HEIGHT = 2*BASE_CAT_RADIUS;
 
 int SUSHI_WIDTH = 0.5f;
 int SUSHI_HEIGHT = 0.5f;
+
+int BOX_OFFSET = 50;
 // -------------------------------------------
 
 int main() {

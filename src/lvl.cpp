@@ -17,28 +17,23 @@ lvl::lvl(int num) {
             // First column
             posSushis.push_back(b2Vec2(300, 400));
             posSushis.push_back(b2Vec2(300, 700));
-            posSushis.push_back(b2Vec2(300, 1000));
 
             // Second column
             posSushis.push_back(b2Vec2(600, 400));
             posSushis.push_back(b2Vec2(600, 700));
-            posSushis.push_back(b2Vec2(600, 1000));
 
 
             // Third column
             posSushis.push_back(b2Vec2(900, 400));
             posSushis.push_back(b2Vec2(900, 700));
-            posSushis.push_back(b2Vec2(900, 1000));
 
             // Fourth column
             posSushis.push_back(b2Vec2(1200, 400));
             posSushis.push_back(b2Vec2(1200, 700));
-            posSushis.push_back(b2Vec2(1200, 1000));
 
             // Fifth column
             posSushis.push_back(b2Vec2(1500, 400));
             posSushis.push_back(b2Vec2(1500, 700));
-            posSushis.push_back(b2Vec2(1500, 1000));
 
             // ----------------- Kinematic Obstacles -----------------
             kinObsWidth = 200;

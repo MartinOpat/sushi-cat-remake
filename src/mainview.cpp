@@ -110,7 +110,45 @@ void MainView::renderBackground() {
         SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
         SDL_RenderClear(renderer);
     }
+}
 
+void MainView::renderBoxes() {
+    // Draw 4 boxes at the bottom of the screen using the bgBoxTexture
+    if (isBoxLoaded) {
+        SDL_Rect rect;
+        int offset = BOX_OFFSET;
+        rect.x = -offset;
+        rect.y = WINDOW_HEIGHT*0.9f;
+        rect.w = WINDOW_WIDTH/4 + 2*offset;
+        rect.h = 0.1f*WINDOW_HEIGHT;
+        SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
+
+        rect.x = WINDOW_WIDTH/4 - offset;
+        SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
+
+        rect.x = WINDOW_WIDTH/2 - offset;
+        SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
+
+        rect.x = 3*WINDOW_WIDTH/4 - offset;
+        SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
+    } else {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_Rect rect;
+        rect.x = 0;
+        rect.y = WINDOW_HEIGHT - 100;
+        rect.w = 100;
+        rect.h = 100;
+        SDL_RenderFillRect(renderer, &rect);
+
+        rect.x = WINDOW_WIDTH/4 - 50;
+        SDL_RenderFillRect(renderer, &rect);
+
+        rect.x = WINDOW_WIDTH/2 - 50;
+        SDL_RenderFillRect(renderer, &rect);
+
+        rect.x = 3*WINDOW_WIDTH/4 - 50;
+        SDL_RenderFillRect(renderer, &rect);
+    }
 }
 
 void MainView::renderCatsLeftUI(int catsLeft) {
@@ -137,4 +175,9 @@ void MainView::renderCatsLeftUI(int catsLeft) {
 void MainView::setBackground(std::string bgTex) {
     bgTexture = IMG_LoadTexture(renderer, bgTex.c_str());
     isBgLoaded = true;
+}
+
+void MainView::setBoxTexture(std::string boxTex) {
+    bgBoxTexture = IMG_LoadTexture(renderer, boxTex.c_str());
+    isBoxLoaded = true;
 }

@@ -7,6 +7,7 @@ MainApp::MainApp() {
     // ----------------- Initialize Graphics -----------------
     view = new MainView();
     view->setBackground(currLvl->bgTexPath);
+    view->setBoxTexture("icons/box.png");
 
     // ----------------- Make world base -----------------
     world = new World();
@@ -19,8 +20,8 @@ MainApp::MainApp() {
     walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); 
     // Right wall
     walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); 
-    // Bottom wall
-    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
+    // Bottom wall -> Will be replaced by boxes
+    // walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
 
 
     // ----------------- Level loading ----------------- 
@@ -41,6 +42,15 @@ MainApp::MainApp() {
             false, 
             1.0f));
     }
+
+    // Create 4 equidistant static rod obstacles at the bottom of the screen to simulate box edges
+    float rodWidth = BOX_OFFSET/SCALE;
+    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(3*WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, WINDOW_HEIGHT/SCALE)));
+    
 
 }
 
@@ -137,11 +147,13 @@ void MainApp::advanceTime() {
 void MainApp::render() {
     view->renderBackground();
 
-    renderWalls();
+    // renderWalls();
     renderObstacles();
     renderSushis();
     renderCat();
     renderUI();
+
+    view->renderBoxes();
 
     SDL_RenderPresent(view->getRenderer());
 }

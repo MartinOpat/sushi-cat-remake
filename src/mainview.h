@@ -22,9 +22,11 @@ public:
     void renderLevelWonUI();
     void renderLevelLostUI();
     void renderBackground();
+    void renderBoxes();
     void renderCatsLeftUI(int catsLeft);
 
     void setBackground(std::string bgTex);
+    void setBoxTexture(std::string boxTex);
 private:
     //  ----------------- SDL -----------------
     SDL_Window* window;
@@ -33,6 +35,9 @@ private:
     //  ----------------- Textures -----------------
     SDL_Texture* bgTexture;
     bool isBgLoaded = false;
+
+    SDL_Texture* bgBoxTexture;
+    bool isBoxLoaded = false;
 };
 
 #endif // MAINVIEW_H

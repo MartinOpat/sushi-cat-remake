@@ -20,6 +20,8 @@ extern int CAT_SPAWN_HEIGHT;
 extern int SUSHI_WIDTH;
 extern int SUSHI_HEIGHT;
 
+extern int BOX_OFFSET;
+
 // Define multiplaction between a b2Mat33 and a b2Vec3 via *
 inline b2Vec3 operator*(const b2Mat33& A, const b2Vec3& v) {
     return b2Vec3(b2Dot(A.ex, v), b2Dot(A.ey, v), b2Dot(A.ez, v));
