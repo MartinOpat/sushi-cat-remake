@@ -1,8 +1,8 @@
 #include "mainapp.h"
 
-MainApp::MainApp() {
+MainApp::MainApp(int level) {
     // ----------------- Level selection ----------------- 
-    currLvl = new lvl(1);
+    currLvl = new lvl(level);
 
     // ----------------- Initialize Graphics -----------------
     view = new MainView();

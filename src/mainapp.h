@@ -23,7 +23,7 @@
 
 class MainApp {
 public:
-    MainApp();
+    MainApp(int level=1);
     ~MainApp();
 
     void run();

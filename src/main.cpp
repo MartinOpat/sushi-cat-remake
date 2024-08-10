@@ -5,6 +5,7 @@
 
 #include "globals.h"
 #include "mainapp.h"
+#include "menu.h"
 
 // ----------------- Globals -----------------
 int WINDOW_WIDTH = 1920;
@@ -22,8 +23,24 @@ int BOX_OFFSET = 50;
 // -------------------------------------------
 
 int main() {
-    MainApp app;
-    app.run();
+    bool running = true;
+
+    while (running) {
+        // Open menu with level picker
+        std::cout << "Opening menu" << std::endl;
+        Menu menu(&running);
+        int level = menu.run();
+
+        if (!running) {
+            std::cout << "Exiting" << std::endl;
+            break;
+        }
+        std::cout << "Level selected: " << level << std::endl;
+
+        std::cout << "Opening MainApp with level " << level << std::endl;
+        MainApp app(level);
+        app.run();
+    }
 
     return 0;
 }
