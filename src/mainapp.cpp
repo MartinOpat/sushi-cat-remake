@@ -23,6 +23,14 @@ MainApp::MainApp(int level) {
     // Bottom wall -> Will be replaced by boxes
     // walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
 
+    // Create 4 equidistant static rod obstacles at the bottom of the screen to simulate box edges
+    float rodWidth = BOX_OFFSET/SCALE;
+    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(3*WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
+    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, WINDOW_HEIGHT/SCALE)));
+    
 
     // ----------------- Level loading ----------------- 
     // Init cats
@@ -34,23 +42,27 @@ MainApp::MainApp(int level) {
     }
 
     // Create kinematic obstacles
-    for (size_t i = 0; i < currLvl->posKinObs.size(); i++){
-        kinematicObstacles.push_back(new Obstacle((currLvl->vertKinObs)[i],
-            world->getb2World(),
-            (currLvl->posKinObs)[i],
-            b2_kinematicBody, 
-            false, 
-            1.0f));
+    if (currLvl->hasKinObs) {
+        for (size_t i = 0; i < currLvl->posKinObs.size(); i++){
+            kinematicObstacles.push_back(new Obstacle((currLvl->vertKinObs)[i],
+                world->getb2World(),
+                (currLvl->posKinObs)[i],
+                b2_kinematicBody, 
+                false, 
+                1.0f));
+        }
     }
 
-    // Create 4 equidistant static rod obstacles at the bottom of the screen to simulate box edges
-    float rodWidth = BOX_OFFSET/SCALE;
-    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(3*WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, WINDOW_HEIGHT/SCALE)));
-    
+    // Create static obstacles
+    if (currLvl->hasStatObs) {
+        for (size_t i = 0; i < currLvl->posStatObs.size(); i++){
+            staticObstacles.push_back(new Obstacle((currLvl->vertStatObs)[i],
+                world->getb2World(),
+                (currLvl->posStatObs)[i],
+                b2_staticBody, 
+                true));
+        }
+    }
 
 }
 

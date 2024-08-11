@@ -1,7 +1,7 @@
-- Compile for Windows
 - Do menu with:
-    - Explanations
-    - Level picker
+    - Explanations -> pop up window
 - Add readme with
     - Running instructions
     - Compilation instructions
+
+- Does the cat actually grow correctly for more than the first sushi ???

@@ -16,10 +16,18 @@ public:
     int catCount;
 
     // ----------------- Kinematic Obstacles -----------------
+    bool hasKinObs = false;
     std::vector<b2Vec2> posKinObs;
     std::vector<std::vector<b2Vec2>> vertKinObs;
     float kinObsWidth;
     float kinObsHeight;
+
+    // ----------------- Static Obstacles -----------------
+    bool hasStatObs = false;
+    std::vector<b2Vec2> posStatObs;
+    std::vector<std::vector<b2Vec2>> vertStatObs;
+    float statObsWidth;
+    float statObsHeight;
 
     // ----------------- Textures -----------------
     std::string bgTexPath = "";
