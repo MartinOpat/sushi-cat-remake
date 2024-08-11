@@ -35,8 +35,12 @@ private:
     void handleMouseClick(int x, int y);
 
     // ----------------- Buttons -----------------
+    int buttonWidth = 200;
+    int buttonHeight = 50;
+
     Button *exitButton = nullptr;
     Button *instructionsButton = nullptr;
+    std::vector<Button*> levelButtons;
 
     // ----------------- Level Picker -----------------
     int selectedLevel = 1;  // default

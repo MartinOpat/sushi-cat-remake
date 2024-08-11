@@ -28,8 +28,9 @@ int main() {
     while (running) {
         // Open menu with level picker
         std::cout << "Opening menu" << std::endl;
-        Menu menu(&running);
-        int level = menu.run();
+        Menu *menu = new Menu(&running);
+        int level = menu->run();
+        delete menu;
 
         if (!running) {
             std::cout << "Exiting" << std::endl;
@@ -37,9 +38,10 @@ int main() {
         }
         std::cout << "Level selected: " << level << std::endl;
 
-        std::cout << "Opening MainApp with level " << level << std::endl;
-        MainApp app(level);
-        app.run();
+
+        MainApp *app = new MainApp(level);
+        app->run();
+        delete app;
     }
 
     return 0;
