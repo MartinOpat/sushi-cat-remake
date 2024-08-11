@@ -44,6 +44,7 @@ private:
 
     // ----------------- Level Picker -----------------
     int selectedLevel = 1;  // default
+    int numLevels = 3;
 
 
 };

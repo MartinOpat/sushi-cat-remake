@@ -12,8 +12,8 @@ Menu::Menu(bool *running) {
     // TODO: Actually add a pop-up window with instructions
 
     // Set up level picker
-    for (int i = 1; i <= 5; i++) {
-        Button *levelButton = new Button(WINDOW_WIDTH / 2 - 50 + (i-1)*1.1*buttonWidth, WINDOW_HEIGHT / 2 - 3*buttonHeight, buttonWidth, buttonHeight, "Level " + std::to_string(i));
+    for (int i = 1; i <= numLevels; i++) {
+        Button *levelButton = new Button(WINDOW_WIDTH / 2 - 50 + (i-1-numLevels/2)*1.1*buttonWidth, WINDOW_HEIGHT / 2 - 3*buttonHeight, buttonWidth, buttonHeight, "Level " + std::to_string(i));
         levelButton->bindAction([this, i](){selectedLevel = i; inMenu = false;});
         levelButtons.push_back(levelButton);
     }
@@ -84,12 +84,13 @@ void Menu::handleMouseClick(int x, int y) {
 // ----------------- Rendering -----------------
 
 void Menu::render() {
-    SDL_SetRenderDrawColor(view->getRenderer(), 100, 100, 100, 255);
+    SDL_SetRenderDrawColor(view->getRenderer(), 201, 147, 212, 255);
     SDL_RenderClear(view->getRenderer());
 
     renderExitButton();
     renderInstructionsButton();
     renderLevelPicker();
+    renderTitle();
 
     SDL_RenderPresent(view->getRenderer());
 }
@@ -109,6 +110,13 @@ void Menu::renderInstructionsButton() {
 }
 
 void Menu::renderTitle() {
+    TTF_Font* font = TTF_OpenFont("Arial.ttf", 96);
+    SDL_Surface* surface = TTF_RenderText_Solid(font, "The Sushi Cat Knock Off", {255, 255, 255, 255});
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
+    SDL_Rect textRect = {WINDOW_WIDTH / 2 - surface->w / 2, WINDOW_HEIGHT / 4 - surface->h / 2, surface->w, surface->h};
+    SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
 }
 
 
