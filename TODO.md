@@ -4,4 +4,4 @@
     - Running instructions
     - Compilation instructions
 
-- Does the cat actually grow correctly for more than the first sushi ???
+- Implement cat squeezing
