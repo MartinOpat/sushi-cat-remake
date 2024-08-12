@@ -2,16 +2,18 @@
 
 ## Instructions to run the app
 ### On Windows
-Simply double-click the executable `SushiCatRemake.exe` (and pray for the best)
+- Download `SushiCatRemake.zip` from the latest release
+- Unzip the zip
+- Double-click the `SushiCatRemake.exe``
+- Enjoy the simple game
 
-### On Linux
-Simply run the executable `SushiCatRemake`, e.g.:
-```bash
-./SushiCatRemake
-```
-
-## Instructions to compile the app
+## Instructions to compile the app (Linux only)
 ```bash
 make clean && make
+```
+
+To run the compiled app, simply execute the executable (duh) `SushiCatRemake`, e.g.:
+```bash
+./SushiCatRemake
 ```
 

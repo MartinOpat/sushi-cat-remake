@@ -3,7 +3,7 @@
 
 # Compiler settings
 CXX = g++
-CXXFLAGS = -g -Wall -std=c++17 `sdl2-config --cflags` -Ibox2d-main/include -I/usr/include -Isrc
+CXXFLAGS = -Wall -std=c++17 `sdl2-config --cflags` -Ibox2d-main/include -I/usr/include -Isrc
 LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_gfx -Lbox2d-main/build/bin -lbox2d -L/usr/lib -lGL -lGLU
 
 # Windows compiler settings
@@ -16,7 +16,7 @@ WIN_SDL2_TTF_BASE = SDL2_ttf/x86_64-w64-mingw32
 WIN_BOX2D_INCLUDE = box2d-win/mingw64/include
 WIN_BOX2D_LIB = box2d-win/mingw64/bin
 
-WIN_CXXFLAGS = -g -Wall -std=c++17 \
+WIN_CXXFLAGS = -Wall -std=c++17 \
                -I$(WIN_SDL2_BASE)/include \
                -I$(WIN_SDL2_BASE)/include/SDL2 \
                -I$(WIN_SDL2_IMAGE_BASE)/include \

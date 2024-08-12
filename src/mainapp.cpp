@@ -7,7 +7,11 @@ MainApp::MainApp(int level) {
     // ----------------- Initialize Graphics -----------------
     view = new MainView();
     view->setBackground(currLvl->bgTexPath);
-    view->setBoxTexture("icons/box.png");
+    #ifdef _WIN32
+        view->setBoxTexture("icons\\box.png");
+    #else
+        view->setBoxTexture("icons/box.png");
+    #endif
 
     // ----------------- Make world base -----------------
     world = new World();
