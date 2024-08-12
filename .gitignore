@@ -61,3 +61,7 @@ box2d-win/
 box2d-win/*
 /box2d-win/
 /box2d-win/*
+
+# Other parts
+SushiCatRemake
+*.o
