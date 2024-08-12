@@ -27,11 +27,11 @@ Cat::Cat(float x, float y, b2World *world) {
     for (int i = 0; i < NUM_CAT_PARTICLES; ++i) {
         b2Body* bodyA = particles[i];
         b2Body* bodyB = particles[(i + 1) % NUM_CAT_PARTICLES];
-        jb = createDistanceJoint(*world, bodyA, bodyB, 120.0f, 0);
+        jb = createDistanceJoint(*world, bodyA, bodyB, 120.0f, 0);  // default: f=120.0f, b=0
         outerJoints.push_back(jb);
         if (i % (NUM_CAT_PARTICLES/20) == 0) {
             b2Body* bodyC = particles[(i + NUM_CAT_PARTICLES/2) % NUM_CAT_PARTICLES];
-            jb = createDistanceJoint(*world, bodyA, bodyC, 15.0f, 0.25f);
+            jb = createDistanceJoint(*world, bodyA, bodyC, innerJointsFreq, innerJointsDamping);  // default: f=15.0f, b=0.25f
             innerJoints.push_back(jb);
         }
     }
@@ -61,8 +61,8 @@ b2Body* Cat::createCircle(b2World& world, float x, float y, float radius) {
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &circle;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
+    fixtureDef.density = 1.0f;  // default 1.0f
+    fixtureDef.friction = 0.3f;  // default 0.3f
     body->CreateFixture(&fixtureDef);
     return body;
 }
@@ -137,7 +137,7 @@ void Cat::updateRadius(float newRadius) {
         // // Update stiffnes from new frequency -> Kinda works, not the best
         // float f = 120.0f;
         // float b = 0.25f;
-        // innerJoints[i]->SetStiffness(innerJoints[i]->GetStiffness()/200.0f);
+        // innerJoints[i]->SetStiffness(innerJoints[i]->GetStiffness()/20.0f);
     }
 }
 
@@ -163,6 +163,64 @@ void Cat::setPosition(float x, float y) {
 void Cat::eatSushi() {
     eatenSushis++;
     updateRadius(BASE_CAT_RADIUS + eatenSushis * BASE_CAT_RADIUS / 20.0f);
+}
+
+bool Cat::isStuck() {
+    // Check if the cat is stuck by checking the average velocity of particles
+    float avgVelocity = 0.0f;
+    for (const auto& body : particles) {
+        avgVelocity += body->GetLinearVelocity().Length();
+    }
+    avgVelocity /= particles.size();
+    // std::cout << "Avg. velocity: " << avgVelocity << std::endl;
+
+
+    // Check that avg. velocity is below a threshold for 3 consecutive seconds
+    static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    std::chrono::duration<float> elapsed_seconds = now - last;
+
+    // std::cout << "Elapsed time: " << elapsed_seconds.count() << std::endl;
+
+    if (avgVelocity < 0.01f) {
+        if (elapsed_seconds.count() > 3.0f) {
+            return true;
+        }
+    } else {
+        last = now;
+    }
+    return false;
+}
+
+void Cat::toggleSquish(b2World *world) {
+    // Toggle the squish state of the cat
+    if (innerJointsFreq == innerJointsBaseFreq) {
+        innerJointsFreq = innerJointsSquishFreq;
+        innerJointsDamping = innerJointsSquishDamping;
+    } else {
+        innerJointsFreq = innerJointsBaseFreq;
+        innerJointsDamping = innerJointsBaseDamping;
+    }
+
+    // Free up old joints and clear the array
+    for (auto* joint : innerJoints) {
+        world->DestroyJoint(joint);
+    }
+    innerJoints.clear();
+
+    // Update inner joints
+    b2DistanceJoint *jb;
+    for (int i = 0; i < NUM_CAT_PARTICLES; ++i) {
+        b2Body* bodyA = particles[i];
+        b2Body* bodyB = particles[(i + 1) % NUM_CAT_PARTICLES];
+        jb = createDistanceJoint(*world, bodyA, bodyB, 120.0f, 0);  // default: f=120.0f, b=0
+        outerJoints.push_back(jb);
+        if (i % (NUM_CAT_PARTICLES/20) == 0) {
+            b2Body* bodyC = particles[(i + NUM_CAT_PARTICLES/2) % NUM_CAT_PARTICLES];
+            jb = createDistanceJoint(*world, bodyA, bodyC, innerJointsFreq, innerJointsDamping);  // default: f=15.0f, b=0.25f
+            innerJoints.push_back(jb);
+        }
+    }
 }
 
 // -------------------- Rendering --------------------

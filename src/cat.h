@@ -7,6 +7,7 @@
 #include <SDL2/SDL_image.h>
 #include <vector>
 #include <iostream>
+#include <chrono>
 
 // Define your class and its members
 class Cat {
@@ -25,6 +26,8 @@ public:
     void eatSushi();
 
     bool isOffscreen() {return particles[0]->GetPosition().y > WINDOW_HEIGHT/SCALE;};
+    bool isStuck();
+    void toggleSquish(b2World *world);
 
 private:
     // ----------------- Rendering functions -----------------
@@ -43,6 +46,14 @@ private:
     std::vector<b2DistanceJoint *> outerJoints;
     std::vector<b2DistanceJoint *> innerJoints;
     std::vector<b2Body*> particles;
+
+    float innerJointsFreq = 15.0f;
+    float innerJointsBaseFreq = 15.0f;
+    float innerJointsSquishFreq = 5.0f;
+
+    float innerJointsDamping = 0.25f;
+    float innerJointsBaseDamping = 0.25f;
+    float innerJointsSquishDamping = 0.1f;
 
     // ----------------- Cat rendering attributes -----------------
     float radius;

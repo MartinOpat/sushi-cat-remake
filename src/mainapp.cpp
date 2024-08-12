@@ -105,7 +105,7 @@ void MainApp::run() {
         frameStart = SDL_GetTicks();
 
         pollEvents();
-        handleCollisions();
+        handlePhysics();
         advanceTime();
         render();
 
@@ -116,7 +116,12 @@ void MainApp::run() {
     }
 }
 
-// ----------------- Collision handling -----------------
+// ----------------- Physics handling -----------------
+
+void MainApp::handlePhysics() {
+    handleCollisions();
+    handleCatStuck();
+}
 
 void MainApp::handleCollisions() {
     if (cat == nullptr) return;
@@ -139,6 +144,27 @@ void MainApp::handleCollisions() {
 
         // Make circle bigger by lengthening the distance joints and increasing radius
         cat->eatSushi();
+    }
+}
+
+void MainApp::handleCatStuck() {
+    static bool catWasStuck = false;
+    if (cat != nullptr && cat->isStuck()) {
+        std::cout << "Cat is stuck!" << std::endl;
+        cat->toggleSquish(world->getb2World());
+        catWasStuck = true;
+    }
+
+    // Untoggle stuck cat after 3 seconds
+    if (catWasStuck) {
+        static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
+        std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+        std::chrono::duration<float> elapsed_seconds = now - last;
+        if (elapsed_seconds.count() > 3) {
+            cat->toggleSquish(world->getb2World());
+            catWasStuck = false;
+            last = now;
+        }
     }
 }
 

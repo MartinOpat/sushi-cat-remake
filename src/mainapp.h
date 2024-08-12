@@ -56,7 +56,10 @@ private:
     void handleMouseClick(int x, int y);
     void handleKeyPress(SDL_Keycode key);
 
+    // ----------------- Physics -----------------
+    void handlePhysics();
     void handleCollisions();
+    void handleCatStuck();
 
     // ----------------- Rendering -----------------
     void render();
