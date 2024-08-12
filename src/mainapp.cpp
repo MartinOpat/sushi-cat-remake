@@ -252,6 +252,8 @@ void MainApp::handleKeyPressSpace() {
 void MainApp::handleKeyPress(SDL_Keycode key) {
     if (key == SDLK_SPACE) {
         handleKeyPressSpace();
+    } else if (key == SDLK_ESCAPE) {
+        quit = true;
     }
 }
 

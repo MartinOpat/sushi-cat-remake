@@ -184,7 +184,7 @@ void Menu::renderInstructions() {
         SDL_DestroyTexture(texture);
 
         // Press the exit button to exit level and go back to menu
-        surface = TTF_RenderText_Solid(fontSmall, "Press the exit button to exit level and go back to menu", {0, 0, 0, 255});
+        surface = TTF_RenderText_Solid(fontSmall, "Press the exit button (or 'esc') to exit level and go back to menu", {0, 0, 0, 255});
         texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
         textRect = {(WINDOW_WIDTH - surface->w)/2, (WINDOW_HEIGHT - surface->h)/4 + 5*margin, surface->w, surface->h};
         SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
