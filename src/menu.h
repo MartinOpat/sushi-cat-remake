@@ -27,6 +27,7 @@ private:
     void renderExitButton();
     void renderTitle();
     void renderInstructionsButton();
+    void renderInstructions();
 
     void render();
 
@@ -41,6 +42,9 @@ private:
     Button *exitButton = nullptr;
     Button *instructionsButton = nullptr;
     std::vector<Button*> levelButtons;
+
+    void helperDisplayInstructions();
+    bool instructionsDisplayed = false;
 
     // ----------------- Level Picker -----------------
     int selectedLevel = 1;  // default
