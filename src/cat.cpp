@@ -162,7 +162,7 @@ void Cat::setPosition(float x, float y) {
 
 void Cat::eatSushi() {
     eatenSushis++;
-    updateRadius(radius * 1.1f);
+    updateRadius(BASE_CAT_RADIUS + eatenSushis * BASE_CAT_RADIUS / 20.0f);
 }
 
 // -------------------- Rendering --------------------
