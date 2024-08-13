@@ -49,7 +49,7 @@ private:
 
     float innerJointsFreq = 15.0f;
     float innerJointsBaseFreq = 15.0f;
-    float innerJointsSquishFreq = 5.0f;
+    float innerJointsSquishFreq = 1.0f;
 
     float innerJointsDamping = 0.25f;
     float innerJointsBaseDamping = 0.25f;

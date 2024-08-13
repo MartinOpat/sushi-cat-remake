@@ -164,7 +164,7 @@ void MainApp::handleCatStuck() {
         static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
         std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
         std::chrono::duration<float> elapsed_seconds = now - last;
-        if (elapsed_seconds.count() > 3) {
+        if (elapsed_seconds.count() > 3 || isNewCat) {
             cat->toggleSquish(world->getb2World());
             catWasStuck = false;
             last = now;
