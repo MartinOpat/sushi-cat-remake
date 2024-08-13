@@ -35,7 +35,6 @@ int Menu::run() {
         frameStart = SDL_GetTicks();
 
         handleEvents();
-        // handleMouseHover();
         render();
 
         frameTime = SDL_GetTicks() - frameStart;
@@ -92,23 +91,6 @@ void Menu::handleMouseClick(int x, int y) {
         }
     }
 }
-
-// void Menu::handleMouseHover() {
-//     int x, y;
-//     SDL_GetMouseState(&x, &y);
-
-//     if (exitButton->isWithinBounds(x, y)) {
-//         exitButton->hover();
-//     } else if (instructionsButton->isWithinBounds(x, y)) {
-//         instructionsButton->hover();
-//     } else {
-//         for (Button* button : levelButtons) {
-//             if (button->isWithinBounds(x, y)) {
-//                 button->hover();
-//             }
-//         }
-//     }
-// }
 
 // ----------------- Rendering -----------------
 

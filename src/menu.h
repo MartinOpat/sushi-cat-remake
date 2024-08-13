@@ -34,7 +34,6 @@ private:
     // ----------------- Events -----------------
     void handleEvents();
     void handleMouseClick(int x, int y);
-    // void handleMouseHover();
 
     // ----------------- Buttons -----------------
     int buttonWidth = 200;
