@@ -35,6 +35,7 @@ int Menu::run() {
         frameStart = SDL_GetTicks();
 
         handleEvents();
+        // handleMouseHover();
         render();
 
         frameTime = SDL_GetTicks() - frameStart;
@@ -92,6 +93,23 @@ void Menu::handleMouseClick(int x, int y) {
     }
 }
 
+// void Menu::handleMouseHover() {
+//     int x, y;
+//     SDL_GetMouseState(&x, &y);
+
+//     if (exitButton->isWithinBounds(x, y)) {
+//         exitButton->hover();
+//     } else if (instructionsButton->isWithinBounds(x, y)) {
+//         instructionsButton->hover();
+//     } else {
+//         for (Button* button : levelButtons) {
+//             if (button->isWithinBounds(x, y)) {
+//                 button->hover();
+//             }
+//         }
+//     }
+// }
+
 // ----------------- Rendering -----------------
 
 void Menu::render() {
@@ -108,17 +126,23 @@ void Menu::render() {
 }
 
 void Menu::renderLevelPicker() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
     for (Button* button : levelButtons) {
-        button->render(view->getRenderer());
+        button->render(view->getRenderer(), x, y);
     }
 }
 
 void Menu::renderExitButton() {
-    exitButton->render(view->getRenderer());
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    exitButton->render(view->getRenderer(), x, y);
 }
 
 void Menu::renderInstructionsButton() {
-    instructionsButton->render(view->getRenderer());
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    instructionsButton->render(view->getRenderer(), x, y);
 }
 
 void Menu::renderTitle() {

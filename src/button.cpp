@@ -12,7 +12,13 @@ bool Button::isWithinBounds(int x, int y) {
     return x >= this->x && x <= this->x + this->width && y >= this->y && y <= this->y + this->height;
 }
 
-void Button::render(SDL_Renderer* renderer) {
+void Button::render(SDL_Renderer* renderer, int mouseX, int mouseY) {
+    if (isWithinBounds(mouseX, mouseY)) {
+        bgColor = bgHoverColor;
+    } else {
+        bgColor = bgBaseColor;
+    }
+    
     SDL_Rect rect = {x, y, width, height};
     SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
     SDL_RenderFillRect(renderer, &rect);

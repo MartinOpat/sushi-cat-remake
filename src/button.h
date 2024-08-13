@@ -19,7 +19,7 @@ public:
 
     void doClick() {action();std::cout << "Button clicked" << std::endl;}
 
-    void render(SDL_Renderer *renderer);
+    void render(SDL_Renderer *renderer, int mouseX, int mouseY);
 
     
 private:
@@ -28,7 +28,11 @@ private:
     int width;
     int height;
     std::string text;
+
     SDL_Color bgColor = {0, 0, 0, 255};
+    SDL_Color bgBaseColor = {0, 0, 0, 255};
+    SDL_Color bgHoverColor = {50, 50, 50, 255};
+
 
     std::function<void()> action;
 
