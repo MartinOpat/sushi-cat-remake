@@ -3,7 +3,7 @@
 
 # Compiler settings
 CXX = g++
-CXXFLAGS = -Wall -std=c++17 `sdl2-config --cflags` -Ibox2d-main/include -I/usr/include -Isrc
+CXXFLAGS = -g -Wall -std=c++17 `sdl2-config --cflags` -Ibox2d-main/include -I/usr/include -Isrc
 LDFLAGS = `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_gfx -Lbox2d-main/build/bin -lbox2d -L/usr/lib -lGL -lGLU
 
 # Windows compiler settings

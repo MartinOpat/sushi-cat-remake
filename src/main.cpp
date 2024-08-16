@@ -2,6 +2,7 @@
 
 #define SDL_MAIN_HANDLED    // Tell SDL that we'll set up our own main function
 #include <SDL2/SDL.h>
+#include <unistd.h>
 
 #include "globals.h"
 #include "mainapp.h"

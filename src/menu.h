@@ -43,7 +43,6 @@ private:
     Button *instructionsButton = nullptr;
     std::vector<Button*> levelButtons;
 
-    void helperDisplayInstructions();
     bool instructionsDisplayed = false;
 
     // ----------------- Level Picker -----------------

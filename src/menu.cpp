@@ -135,6 +135,7 @@ void Menu::renderTitle() {
     SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
+    TTF_CloseFont(font);
 }
 
 void Menu::renderInstructions() {
