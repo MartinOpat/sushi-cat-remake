@@ -26,6 +26,7 @@ int BOX_OFFSET = 50;
 int main() {
     bool running = true;
 
+    MainApp *app = nullptr;
     while (running) {
         // Open menu with level picker
         std::cout << "Opening menu" << std::endl;
@@ -40,10 +41,13 @@ int main() {
         std::cout << "Level selected: " << level << std::endl;
 
 
-        MainApp *app = new MainApp(level);
+        app = new MainApp(level);
         app->run();
         delete app;
+        app = nullptr;
     }
+    if (app != nullptr)
+        delete app;
 
     return 0;
 }

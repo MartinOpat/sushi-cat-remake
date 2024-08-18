@@ -23,6 +23,10 @@ Menu::~Menu() {
     delete view;
     delete exitButton;
     delete instructionsButton;
+
+    for (Button* button : levelButtons) {
+        delete button;
+    }
 }
 
 int Menu::run() {

@@ -97,6 +97,7 @@ MainApp::~MainApp() {
     }
     delete world;
     delete view;
+    delete currLvl;
 }
 
 void MainApp::run() {
