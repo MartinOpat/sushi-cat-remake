@@ -29,6 +29,7 @@ public:
     bool isStuck();
     void toggleSquish(b2World *world);
 
+    bool wasStuck = false;
 private:
     // ----------------- Rendering functions -----------------
     void renderCatParticles(SDL_Renderer* renderer);
@@ -54,6 +55,7 @@ private:
     float innerJointsDamping = 0.25f;
     float innerJointsBaseDamping = 0.25f;
     float innerJointsSquishDamping = 0.1f;
+
 
     // ----------------- Cat rendering attributes -----------------
     float radius;

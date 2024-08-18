@@ -153,21 +153,21 @@ void MainApp::handleCollisions() {
 }
 
 void MainApp::handleCatStuck() {
-    static bool catWasStuck = false;
-    if (cat != nullptr && cat->isStuck()) {
+    if (cat == nullptr) return;
+    if (cat->isStuck()) {
         std::cout << "Cat is stuck!" << std::endl;
         cat->toggleSquish(world->getb2World());
-        catWasStuck = true;
+        cat->wasStuck = true;
     }
 
     // Untoggle stuck cat after 3 seconds
-    if (catWasStuck) {
+    if (cat->wasStuck) {
         static std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
         std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
         std::chrono::duration<float> elapsed_seconds = now - last;
-        if (elapsed_seconds.count() > 3 || isNewCat) {
+        if (elapsed_seconds.count() > 3) {
             cat->toggleSquish(world->getb2World());
-            catWasStuck = false;
+            cat->wasStuck = false;
             last = now;
         }
     }
