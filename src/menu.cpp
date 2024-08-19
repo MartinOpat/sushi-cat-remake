@@ -156,10 +156,10 @@ void Menu::renderInstructions() {
         SDL_Rect rect;
 
         int margin = 100;
-        rect.x = margin; 
-        rect.y = margin; 
-        rect.w = WINDOW_WIDTH - 2*margin; 
-        rect.h = WINDOW_HEIGHT - 2*margin;
+        rect.x = margin / X_WINDOW_SCALE; 
+        rect.y = margin / Y_WINDOW_SCALE; 
+        rect.w = (WINDOW_WIDTH - 2*margin) / X_WINDOW_SCALE; 
+        rect.h = (WINDOW_HEIGHT - 2*margin) / Y_WINDOW_SCALE;
 
         // Enable blending mode
         SDL_SetRenderDrawBlendMode(view->getRenderer(), SDL_BLENDMODE_BLEND);
@@ -172,7 +172,7 @@ void Menu::renderInstructions() {
         // Display title
         SDL_Surface* surface = TTF_RenderText_Solid(fontBig, "Controls:", {0, 0, 0, 255});
         SDL_Texture* texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
-        SDL_Rect textRect = {(WINDOW_WIDTH - surface->w)/2, (WINDOW_HEIGHT - surface->h)/4, surface->w, surface->h};
+        SDL_Rect textRect = {(int)((WINDOW_WIDTH - surface->w)/2/X_WINDOW_SCALE), (int)((WINDOW_HEIGHT - surface->h)/4/Y_WINDOW_SCALE), (int)(surface->w / X_WINDOW_SCALE), (int)(surface->h / Y_WINDOW_SCALE)};
         SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
@@ -181,7 +181,7 @@ void Menu::renderInstructions() {
         // Hold and drag mouse to move cat
         surface = TTF_RenderText_Solid(fontSmall, "Hold and drag mouse to move cat", {0, 0, 0, 255});
         texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
-        textRect = {(WINDOW_WIDTH - surface->w)/2, (WINDOW_HEIGHT - surface->h)/4 + 2*margin, surface->w, surface->h};
+        textRect = {(int)((WINDOW_WIDTH - surface->w)/2/X_WINDOW_SCALE), (int)(((WINDOW_HEIGHT - surface->h)/4 + 2*margin)/Y_WINDOW_SCALE), (int)(surface->w/X_WINDOW_SCALE), (int)(surface->h/Y_WINDOW_SCALE)};
         SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
@@ -189,7 +189,7 @@ void Menu::renderInstructions() {
         // Release mouse to drop cat
         surface = TTF_RenderText_Solid(fontSmall, "Release mouse to drop cat", {0, 0, 0, 255});
         texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
-        textRect = {(WINDOW_WIDTH - surface->w)/2, (WINDOW_HEIGHT - surface->h)/4 + 3*margin, surface->w, surface->h};
+        textRect = {(int)((WINDOW_WIDTH - surface->w)/2/X_WINDOW_SCALE), (int)(((WINDOW_HEIGHT - surface->h)/4 + 3*margin)/Y_WINDOW_SCALE), (int)(surface->w/X_WINDOW_SCALE), (int)(surface->h/Y_WINDOW_SCALE)};
         SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
@@ -197,7 +197,7 @@ void Menu::renderInstructions() {
         // Press 'space' to reset cat
         surface = TTF_RenderText_Solid(fontSmall, "Press 'space' to reset cat", {0, 0, 0, 255});
         texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
-        textRect = {(WINDOW_WIDTH - surface->w)/2, (WINDOW_HEIGHT - surface->h)/4 + 4*margin, surface->w, surface->h};
+        textRect = {(int)((WINDOW_WIDTH - surface->w)/2/X_WINDOW_SCALE), (int)(((WINDOW_HEIGHT - surface->h)/4 + 4*margin)/Y_WINDOW_SCALE), (int)(surface->w/X_WINDOW_SCALE), (int)(surface->h/Y_WINDOW_SCALE)};
         SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
@@ -205,7 +205,7 @@ void Menu::renderInstructions() {
         // Press the exit button to exit level and go back to menu
         surface = TTF_RenderText_Solid(fontSmall, "Press the exit button (or 'esc') to exit level and go back to menu", {0, 0, 0, 255});
         texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
-        textRect = {(WINDOW_WIDTH - surface->w)/2, (WINDOW_HEIGHT - surface->h)/4 + 5*margin, surface->w, surface->h};
+        textRect = {(int)((WINDOW_WIDTH - surface->w)/2/X_WINDOW_SCALE), (int)(((WINDOW_HEIGHT - surface->h)/4 + 5*margin)/Y_WINDOW_SCALE), (int)(surface->w/X_WINDOW_SCALE), (int)(surface->h/Y_WINDOW_SCALE)};
         SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
@@ -213,7 +213,7 @@ void Menu::renderInstructions() {
         // To close this window, press 'esc'
         surface = TTF_RenderText_Solid(fontSmall, "To close this window, press 'esc'", {0, 0, 0, 255});
         texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
-        textRect = {(WINDOW_WIDTH - surface->w)/2, (WINDOW_HEIGHT - surface->h)/4 + 6*margin, surface->w, surface->h};
+        textRect = {(int)((WINDOW_WIDTH - surface->w)/2/X_WINDOW_SCALE), (int)(((WINDOW_HEIGHT - surface->h)/4 + 6*margin)/Y_WINDOW_SCALE), (int)(surface->w/X_WINDOW_SCALE), (int)(surface->h/Y_WINDOW_SCALE)};
         SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
