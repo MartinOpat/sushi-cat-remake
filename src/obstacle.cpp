@@ -28,8 +28,8 @@ void Obstacle::render(SDL_Renderer* renderer) {
 
             for (int i = 0; i < vertexCount; ++i) {
                 b2Vec2 wp = body->GetWorldPoint(polygon->m_vertices[i]);
-                vx[i] = static_cast<Sint16>(wp.x * PHYSICS_SCALE);
-                vy[i] = static_cast<Sint16>(wp.y * PHYSICS_SCALE);
+                vx[i] = static_cast<Sint16>(wp.x * PHYSICS_SCALE / X_LEVEL_WINDOW_SCALE);
+                vy[i] = static_cast<Sint16>(wp.y * PHYSICS_SCALE / Y_LEVEL_WINDOW_SCALE);
             }
 
             // Draw filled polygon with rotation handled
