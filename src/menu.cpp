@@ -143,7 +143,7 @@ void Menu::renderTitle() {
     TTF_Font* font = TTF_OpenFont("Arial.ttf", 96);
     SDL_Surface* surface = TTF_RenderText_Solid(font, "The Sushi Cat Knock Off", {255, 255, 255, 255});
     SDL_Texture* texture = SDL_CreateTextureFromSurface(view->getRenderer(), surface);
-    SDL_Rect textRect = {WINDOW_WIDTH / 2 - surface->w / 2, WINDOW_HEIGHT / 4 - surface->h / 2, surface->w, surface->h};
+    SDL_Rect textRect = {(int)((WINDOW_WIDTH / 2 - surface->w / 2)/X_WINDOW_SCALE), (int)((WINDOW_HEIGHT / 4 - surface->h / 2)/Y_WINDOW_SCALE), (int)((surface->w)/X_WINDOW_SCALE), (int)((surface->h)/Y_WINDOW_SCALE)};
     SDL_RenderCopy(view->getRenderer(), texture, NULL, &textRect);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);

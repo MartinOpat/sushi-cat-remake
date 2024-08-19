@@ -9,7 +9,7 @@ Button::Button(int x, int y, int width, int height, std::string text) {
 }
 
 bool Button::isWithinBounds(int x, int y) {
-    return x >= this->x && x <= this->x + this->width && y >= this->y && y <= this->y + this->height;
+    return x >= this->x / X_WINDOW_SCALE && x <= (this->x + this->width) / X_WINDOW_SCALE && y >= this->y / Y_WINDOW_SCALE && y <= (this->y + this->height) / Y_WINDOW_SCALE;
 }
 
 void Button::render(SDL_Renderer* renderer, int mouseX, int mouseY) {
