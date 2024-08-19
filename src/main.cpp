@@ -15,6 +15,8 @@ int WINDOW_HEIGHT = 1080;
 float PHYSICS_SCALE = 50.0f;
 float X_WINDOW_SCALE = 1.0f;
 float Y_WINDOW_SCALE = 1.0f;
+float X_LEVEL_WINDOW_SCALE = 1.0f;
+float Y_LEVEL_WINDOW_SCALE = 1.0f;
 
 int NUM_CAT_PARTICLES = 25;
 int BASE_CAT_RADIUS = 1.0f;
@@ -37,13 +39,18 @@ int main() {
         int level = menu->run();
         delete menu;
 
+        // Check if we should exit
         if (!running) {
             std::cout << "Exiting" << std::endl;
             break;
         }
         std::cout << "Level selected: " << level << std::endl;
 
+        // Set window scale
+        X_LEVEL_WINDOW_SCALE = X_WINDOW_SCALE;
+        Y_LEVEL_WINDOW_SCALE = Y_WINDOW_SCALE;
 
+        // Open main app with selected level
         app = new MainApp(level);
         app->run();
         delete app;

@@ -15,6 +15,8 @@ extern int WINDOW_HEIGHT;
 extern float PHYSICS_SCALE;
 extern float X_WINDOW_SCALE;
 extern float Y_WINDOW_SCALE;
+extern float X_LEVEL_WINDOW_SCALE;
+extern float Y_LEVEL_WINDOW_SCALE;
 
 extern int NUM_CAT_PARTICLES;
 extern int BASE_CAT_RADIUS;
@@ -47,6 +49,11 @@ inline b2Vec3 operator/(const b2Vec3& v, float a) {
 // Define / operator for b2Vec2 and float
 inline b2Vec2 operator/(const b2Vec2& v, float a) {
     return b2Vec2(v.x / a, v.y / a);
+}
+
+// Define / operator for b2Vec2 and b2Vec2
+inline b2Vec2 operator/(const b2Vec2& v, const b2Vec2& a) {
+    return b2Vec2(v.x / a.x, v.y / a.y);
 }
 
 

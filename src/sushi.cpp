@@ -57,6 +57,6 @@ void Sushi::render(SDL_Renderer* renderer) {
 
     // Alternative version where we draw the sushi as a texture
     if (sushiTex == nullptr) loadTextures(renderer);
-    SDL_Rect dest = box2DToSDL(body->GetPosition(), 1.0f, 1.0f);
+    SDL_Rect dest = box2DToSDL(body->GetPosition() / b2Vec2(X_LEVEL_WINDOW_SCALE, Y_LEVEL_WINDOW_SCALE), 1.0f / X_LEVEL_WINDOW_SCALE, 1.0f / Y_LEVEL_WINDOW_SCALE);
     SDL_RenderCopy(renderer, sushiTex, NULL, &dest);
 }
