@@ -165,7 +165,10 @@ void Cat::eatSushi() {
     updateRadius(BASE_CAT_RADIUS + eatenSushis * BASE_CAT_RADIUS / 20.0f);
 }
 
-bool Cat::isStuck() {
+bool Cat::isStuck(bool &isDragging) {
+    if (isDragging) {
+        return false;
+    }
     // Check if the cat is stuck by checking the average velocity of particles
     float avgVelocity = 0.0f;
     for (const auto& body : particles) {

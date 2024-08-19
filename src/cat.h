@@ -26,7 +26,7 @@ public:
     void eatSushi();
 
     bool isOffscreen() {return particles[0]->GetPosition().y > WINDOW_HEIGHT/SCALE;};
-    bool isStuck();
+    bool isStuck(bool &isDragging);
     void toggleSquish(b2World *world);
 
     bool wasStuck = false;

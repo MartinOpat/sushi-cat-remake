@@ -154,7 +154,7 @@ void MainApp::handleCollisions() {
 
 void MainApp::handleCatStuck() {
     if (cat == nullptr) return;
-    if (cat->isStuck()) {
+    if (cat->isStuck(isDragging)) {
         std::cout << "Cat is stuck!" << std::endl;
         cat->toggleSquish(world->getb2World());
         cat->wasStuck = true;
