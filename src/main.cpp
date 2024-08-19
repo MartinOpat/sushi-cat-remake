@@ -13,7 +13,8 @@ int WINDOW_WIDTH = 1920;
 int WINDOW_HEIGHT = 1080;
 
 float PHYSICS_SCALE = 50.0f;
-float WINDOW_SCALE = 1.0f;
+float X_WINDOW_SCALE = 1.0f;
+float Y_WINDOW_SCALE = 1.0f;
 
 int NUM_CAT_PARTICLES = 25;
 int BASE_CAT_RADIUS = 1.0f;

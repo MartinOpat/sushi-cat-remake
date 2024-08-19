@@ -13,7 +13,8 @@ extern int WINDOW_WIDTH;
 extern int WINDOW_HEIGHT;
 
 extern float PHYSICS_SCALE;
-extern float WINDOW_SCALE;
+extern float X_WINDOW_SCALE;
+extern float Y_WINDOW_SCALE;
 
 extern int NUM_CAT_PARTICLES;
 extern int BASE_CAT_RADIUS;

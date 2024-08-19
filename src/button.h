@@ -7,6 +7,8 @@
 #include <functional>
 #include <iostream>
 
+#include "globals.h"
+
 class Button {
 public:
 

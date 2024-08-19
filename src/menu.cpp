@@ -76,6 +76,14 @@ void Menu::handleEvents() {
                         break;
                 }
                 break;
+            case SDL_WINDOWEVENT:
+                if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+                    int newWidth = event.window.data1;
+                    int newHeight = event.window.data2;
+                    X_WINDOW_SCALE = (float)WINDOW_WIDTH / newWidth;
+                    Y_WINDOW_SCALE = (float)WINDOW_HEIGHT / newHeight;
+                }
+                break;
             default:
                 break;
         }
