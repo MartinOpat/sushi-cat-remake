@@ -19,21 +19,21 @@ MainApp::MainApp(int level) {
 
     // Create 4 walls around the screen to prevent objects from moving out of the screen
     // Left wall
-    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE))); 
+    walls.push_back(new Wall(0, WINDOW_HEIGHT/PHYSICS_SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/PHYSICS_SCALE))); 
     // Top wall
-    walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); 
+    walls.push_back(new Wall(WINDOW_WIDTH/PHYSICS_SCALE, 0, world->getb2World(), b2Vec2(WINDOW_WIDTH/PHYSICS_SCALE, 0))); 
     // Right wall
-    walls.push_back(new Wall(0, WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, 0))); 
+    walls.push_back(new Wall(0, WINDOW_HEIGHT/PHYSICS_SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/PHYSICS_SCALE, 0))); 
     // Bottom wall -> Will be replaced by boxes
-    // walls.push_back(new Wall(WINDOW_WIDTH/SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
+    // walls.push_back(new Wall(WINDOW_WIDTH/PHYSICS_SCALE, 0, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/PHYSICS_SCALE)));
 
     // Create 4 equidistant static rod obstacles at the bottom of the screen to simulate box edges
-    float rodWidth = BOX_OFFSET/SCALE;
-    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE/2, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(3*WINDOW_WIDTH/SCALE/4, WINDOW_HEIGHT/SCALE)));
-    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/SCALE, WINDOW_HEIGHT/SCALE)));
+    float rodWidth = BOX_OFFSET/PHYSICS_SCALE;
+    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/PHYSICS_SCALE, world->getb2World(), b2Vec2(0, WINDOW_HEIGHT/PHYSICS_SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/PHYSICS_SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/PHYSICS_SCALE/4, WINDOW_HEIGHT/PHYSICS_SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/PHYSICS_SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/PHYSICS_SCALE/2, WINDOW_HEIGHT/PHYSICS_SCALE)));
+    walls.push_back(new Wall(rodWidth, 0.09f*WINDOW_HEIGHT/PHYSICS_SCALE, world->getb2World(), b2Vec2(3*WINDOW_WIDTH/PHYSICS_SCALE/4, WINDOW_HEIGHT/PHYSICS_SCALE)));
+    walls.push_back(new Wall(rodWidth/2, 0.09f*WINDOW_HEIGHT/PHYSICS_SCALE, world->getb2World(), b2Vec2(WINDOW_WIDTH/PHYSICS_SCALE, WINDOW_HEIGHT/PHYSICS_SCALE)));
     
 
     // ----------------- Level loading ----------------- 
@@ -42,7 +42,7 @@ MainApp::MainApp(int level) {
 
     // Create sushis
     for (b2Vec2& pos : currLvl->posSushis) {
-        sushis.push_back(new Sushi(pos/SCALE, world->getb2World()));
+        sushis.push_back(new Sushi(pos/PHYSICS_SCALE, world->getb2World()));
     }
 
     // Create kinematic obstacles
@@ -260,7 +260,7 @@ void MainApp::renderUI() {
 
 void MainApp::handleMouseClick(int x, int y) {
     x = std::max(x, BASE_CAT_RADIUS);
-    x = std::min(x, (int)(WINDOW_WIDTH/SCALE) - BASE_CAT_RADIUS);
+    x = std::min(x, (int)(WINDOW_WIDTH/PHYSICS_SCALE) - BASE_CAT_RADIUS);
     y = CAT_SPAWN_HEIGHT;
 
     cat = new Cat(x, y, world->getb2World());
@@ -295,8 +295,8 @@ void MainApp::pollEvents() {
             quit = true;
         } else if (event.type == SDL_MOUSEBUTTONDOWN) {
             int x, y;
-            x = event.button.x / SCALE;
-            y = event.button.y / SCALE;
+            x = event.button.x / PHYSICS_SCALE;
+            y = event.button.y / PHYSICS_SCALE;
 
             if (!newCatReady || catsLeft <= 0) return;
             handleMouseClick(x, y);
@@ -311,9 +311,9 @@ void MainApp::pollEvents() {
     if (isDragging) {
         int x, y;
         SDL_GetMouseState(&x, &y);
-        float newX = x / SCALE;
+        float newX = x / PHYSICS_SCALE;
         newX = std::max(newX, (float)BASE_CAT_RADIUS);
-        newX = std::min(newX, WINDOW_WIDTH/SCALE - BASE_CAT_RADIUS);
+        newX = std::min(newX, WINDOW_WIDTH/PHYSICS_SCALE - BASE_CAT_RADIUS);
         cat->setPosition(newX, CAT_SPAWN_HEIGHT);
     }
 

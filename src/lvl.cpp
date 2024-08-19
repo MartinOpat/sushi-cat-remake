@@ -39,21 +39,21 @@ lvl::lvl(int num) {
             statObsHeight = 25;
             
             // Left diagonal
-            posStatObs.push_back(b2Vec2(600, 400) / SCALE);
+            posStatObs.push_back(b2Vec2(600, 400) / PHYSICS_SCALE);
             vertStatObs.push_back({
-                b2Vec2(-500, -200) / SCALE,
-                b2Vec2(300, 200-20) / SCALE,
-                b2Vec2(300, 200) / SCALE,
-                b2Vec2(-500, -200+20) / SCALE
+                b2Vec2(-500, -200) / PHYSICS_SCALE,
+                b2Vec2(300, 200-20) / PHYSICS_SCALE,
+                b2Vec2(300, 200) / PHYSICS_SCALE,
+                b2Vec2(-500, -200+20) / PHYSICS_SCALE
             });
 
             // Right diagonal
-            posStatObs.push_back(b2Vec2(1325, 400) / SCALE);
+            posStatObs.push_back(b2Vec2(1325, 400) / PHYSICS_SCALE);
             vertStatObs.push_back({
-                b2Vec2(-300, 200-20) / SCALE,
-                b2Vec2(500, -200) / SCALE,
-                b2Vec2(500, -200+20) / SCALE,
-                b2Vec2(-300, 200) / SCALE
+                b2Vec2(-300, 200-20) / PHYSICS_SCALE,
+                b2Vec2(500, -200) / PHYSICS_SCALE,
+                b2Vec2(500, -200+20) / PHYSICS_SCALE,
+                b2Vec2(-300, 200) / PHYSICS_SCALE
             });
 
             // ----------------- Kinematic Obstacles -----------------
@@ -62,12 +62,12 @@ lvl::lvl(int num) {
             kinObsWidth = 200;
             kinObsHeight = 25;
 
-            posKinObs.push_back(b2Vec2(WINDOW_WIDTH/2, 3*WINDOW_HEIGHT/4) / SCALE);
+            posKinObs.push_back(b2Vec2(WINDOW_WIDTH/2, 3*WINDOW_HEIGHT/4) / PHYSICS_SCALE);
             vertKinObs.push_back({
-                b2Vec2(-100, -10) / SCALE,
-                b2Vec2(100, -10) / SCALE,
-                b2Vec2(100, 10) / SCALE,
-                b2Vec2(-100, 10) / SCALE
+                b2Vec2(-100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, 10) / PHYSICS_SCALE,
+                b2Vec2(-100, 10) / PHYSICS_SCALE
             });
 
             // ----------------- Sushi -----------------
@@ -122,36 +122,36 @@ lvl::lvl(int num) {
             kinObsWidth = 200;
             kinObsHeight = 25;
 
-            posKinObs.push_back(b2Vec2(400, 500) / SCALE);
+            posKinObs.push_back(b2Vec2(400, 500) / PHYSICS_SCALE);
             vertKinObs.push_back({
-                b2Vec2(-100, -10) / SCALE,
-                b2Vec2(100, -10) / SCALE,
-                b2Vec2(100, 10) / SCALE,
-                b2Vec2(-100, 10) / SCALE
+                b2Vec2(-100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, 10) / PHYSICS_SCALE,
+                b2Vec2(-100, 10) / PHYSICS_SCALE
             });
 
-            posKinObs.push_back(b2Vec2(800, 500) / SCALE);
+            posKinObs.push_back(b2Vec2(800, 500) / PHYSICS_SCALE);
             vertKinObs.push_back({
-                b2Vec2(-100, -10) / SCALE,
-                b2Vec2(100, -10) / SCALE,
-                b2Vec2(100, 10) / SCALE,
-                b2Vec2(-100, 10) / SCALE
+                b2Vec2(-100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, 10) / PHYSICS_SCALE,
+                b2Vec2(-100, 10) / PHYSICS_SCALE
             });
 
-            posKinObs.push_back(b2Vec2(1200, 500) / SCALE);
+            posKinObs.push_back(b2Vec2(1200, 500) / PHYSICS_SCALE);
             vertKinObs.push_back({
-                b2Vec2(-100, -10) / SCALE,
-                b2Vec2(100, -10) / SCALE,
-                b2Vec2(100, 10) / SCALE,
-                b2Vec2(-100, 10) / SCALE
+                b2Vec2(-100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, 10) / PHYSICS_SCALE,
+                b2Vec2(-100, 10) / PHYSICS_SCALE
             });
             
-            posKinObs.push_back(b2Vec2(1600, 500) / SCALE);
+            posKinObs.push_back(b2Vec2(1600, 500) / PHYSICS_SCALE);
             vertKinObs.push_back({
-                b2Vec2(-100, -10) / SCALE,
-                b2Vec2(100, -10) / SCALE,
-                b2Vec2(100, 10) / SCALE,
-                b2Vec2(-100, 10) / SCALE
+                b2Vec2(-100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, -10) / PHYSICS_SCALE,
+                b2Vec2(100, 10) / PHYSICS_SCALE,
+                b2Vec2(-100, 10) / PHYSICS_SCALE
             });
 
             break;

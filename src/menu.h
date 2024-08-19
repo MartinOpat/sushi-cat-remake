@@ -41,6 +41,8 @@ private:
 
     Button *exitButton = nullptr;
     Button *instructionsButton = nullptr;
+    Button *upscaleButton = nullptr;
+    Button *downscaleButton = nullptr;
     std::vector<Button*> levelButtons;
 
     bool instructionsDisplayed = false;

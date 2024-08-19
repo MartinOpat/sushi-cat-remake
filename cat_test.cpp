@@ -13,7 +13,7 @@
 
 const int WINDOW_WIDTH = 1600;
 const int WINDOW_HEIGHT = 1200;
-const float SCALE = 50.0; // Scale to display Box2D world in pixels
+const float PHYSICS_SCALE = 50.0; // Scale to display Box2D world in pixels
 const int NUM_PARTICLES = 25; // Number of particles in the circle
 float RADIUS = 1.0f; // Radius of the circular structure in meters
 const float SUSHI_WIDTH = 0.5f;
@@ -36,10 +36,10 @@ b2Mat33 operator*(const b2Mat33& A, const b2Mat33& B) {
 // Function to convert Box2D world coordinates to screen coordinates
 SDL_Rect box2DToSDL(const b2Vec2& position, float width, float height) {
     SDL_Rect rect;
-    rect.x = (int)(position.x * SCALE - width * SCALE / 2);
-    rect.y = (int)(position.y * SCALE - height * SCALE / 2);
-    rect.w = (int)(width * SCALE);
-    rect.h = (int)(height * SCALE);
+    rect.x = (int)(position.x * PHYSICS_SCALE - width * PHYSICS_SCALE / 2);
+    rect.y = (int)(position.y * PHYSICS_SCALE - height * PHYSICS_SCALE / 2);
+    rect.w = (int)(width * PHYSICS_SCALE);
+    rect.h = (int)(height * PHYSICS_SCALE);
     return rect;
 }
 
@@ -175,10 +175,10 @@ void renderTexture(SDL_Renderer* renderer, const std::vector<b2Body*>& particles
     }
 
     SDL_Rect dstRect;
-    dstRect.w = static_cast<int>((maxX - minX + 2 * RADIUS) * SCALE/2);
-    dstRect.h = static_cast<int>((maxY - minY + 2 * RADIUS) * SCALE/2);
-    dstRect.x = static_cast<int>((minX - RADIUS) * SCALE) + dstRect.w/2;
-    dstRect.y = static_cast<int>((minY - RADIUS) * SCALE) + dstRect.h/2;
+    dstRect.w = static_cast<int>((maxX - minX + 2 * RADIUS) * PHYSICS_SCALE/2);
+    dstRect.h = static_cast<int>((maxY - minY + 2 * RADIUS) * PHYSICS_SCALE/2);
+    dstRect.x = static_cast<int>((minX - RADIUS) * PHYSICS_SCALE) + dstRect.w/2;
+    dstRect.y = static_cast<int>((minY - RADIUS) * PHYSICS_SCALE) + dstRect.h/2;
 
     // Render the texture to cover the circle
     SDL_RenderCopy(renderer, texture, nullptr, &dstRect);
@@ -189,9 +189,9 @@ void renderParticles(SDL_Renderer* renderer, b2World& world) {
             if (body->GetType() == b2_dynamicBody) {
                 b2Vec2 position = body->GetPosition();
                 b2CircleShape* circle = static_cast<b2CircleShape*>(body->GetFixtureList()->GetShape());
-                int pixelRadius = static_cast<int>(circle->m_radius * SCALE);
-                int centerX = static_cast<int>(position.x * SCALE);
-                int centerY = static_cast<int>(position.y * SCALE);
+                int pixelRadius = static_cast<int>(circle->m_radius * PHYSICS_SCALE);
+                int centerX = static_cast<int>(position.x * PHYSICS_SCALE);
+                int centerY = static_cast<int>(position.y * PHYSICS_SCALE);
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
                 filledCircleRGBA(renderer, centerX, centerY, pixelRadius, 255, 0, 0, 255); // Draw filled circle
             } else {
@@ -204,10 +204,10 @@ void renderParticles(SDL_Renderer* renderer, b2World& world) {
                 }
                 SDL_SetRenderDrawColor(renderer, 128, 128, 128, SDL_ALPHA_OPAQUE);
                 SDL_Rect rect;
-                rect.x = (int)(vertices[0].x * SCALE);
-                rect.y = (int)(vertices[0].y * SCALE);
-                rect.w = (int)((vertices[2].x - vertices[0].x) * SCALE);
-                rect.h = (int)((vertices[2].y - vertices[0].y) * SCALE);
+                rect.x = (int)(vertices[0].x * PHYSICS_SCALE);
+                rect.y = (int)(vertices[0].y * PHYSICS_SCALE);
+                rect.w = (int)((vertices[2].x - vertices[0].x) * PHYSICS_SCALE);
+                rect.h = (int)((vertices[2].y - vertices[0].y) * PHYSICS_SCALE);
                 SDL_RenderFillRect(renderer, &rect);
             }
         }
@@ -223,9 +223,9 @@ void renderPolygon(SDL_Renderer* renderer, b2World& world) {
         if ((*body)->GetType() == b2_dynamicBody) {
             b2Vec2 position = (*body)->GetPosition();
             b2CircleShape* circle = static_cast<b2CircleShape*>((*body)->GetFixtureList()->GetShape());
-            int pixelRadius = static_cast<int>(circle->m_radius * SCALE);
-            int centerX = static_cast<int>(position.x * SCALE);
-            int centerY = static_cast<int>(position.y * SCALE);
+            int pixelRadius = static_cast<int>(circle->m_radius * PHYSICS_SCALE);
+            int centerX = static_cast<int>(position.x * PHYSICS_SCALE);
+            int centerY = static_cast<int>(position.y * PHYSICS_SCALE);
             vx.push_back(centerX);
             vy.push_back(centerY);
         }
@@ -253,15 +253,15 @@ void renderCatEyes(SDL_Renderer* renderer, b2World& world) {
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) - M_PI/2 + M_PI/6;
     float angle2 = atan2(posBOpposite.y - posB.y, posBOpposite.x - posB.x) - M_PI/2 - M_PI/6;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
-    int xB = static_cast<int>(posB.x * SCALE);
-    int yB = static_cast<int>(posB.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
+    int xB = static_cast<int>(posB.x * PHYSICS_SCALE);
+    int yB = static_cast<int>(posB.y * PHYSICS_SCALE);
 
-    int xAOpposite = static_cast<int>(posAOpposite.x * SCALE);
-    int yAOpposite = static_cast<int>(posAOpposite.y * SCALE);
-    int xBOpposite = static_cast<int>(posBOpposite.x * SCALE);
-    int yBOpposite = static_cast<int>(posBOpposite.y * SCALE);
+    int xAOpposite = static_cast<int>(posAOpposite.x * PHYSICS_SCALE);
+    int yAOpposite = static_cast<int>(posAOpposite.y * PHYSICS_SCALE);
+    int xBOpposite = static_cast<int>(posBOpposite.x * PHYSICS_SCALE);
+    int yBOpposite = static_cast<int>(posBOpposite.y * PHYSICS_SCALE);
 
     int size = 8;
 
@@ -359,15 +359,15 @@ void renderCatLegs(SDL_Renderer* renderer, b2World& world) {
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) - M_PI/2 + M_PI/6;
     float angle2 = atan2(posBOpposite.y - posB.y, posBOpposite.x - posB.x) - M_PI/2 - M_PI/6;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
-    int xB = static_cast<int>(posB.x * SCALE);
-    int yB = static_cast<int>(posB.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
+    int xB = static_cast<int>(posB.x * PHYSICS_SCALE);
+    int yB = static_cast<int>(posB.y * PHYSICS_SCALE);
 
-    int xAOpposite = static_cast<int>(posAOpposite.x * SCALE);
-    int yAOpposite = static_cast<int>(posAOpposite.y * SCALE);
-    int xBOpposite = static_cast<int>(posBOpposite.x * SCALE);
-    int yBOpposite = static_cast<int>(posBOpposite.y * SCALE);
+    int xAOpposite = static_cast<int>(posAOpposite.x * PHYSICS_SCALE);
+    int yAOpposite = static_cast<int>(posAOpposite.y * PHYSICS_SCALE);
+    int xBOpposite = static_cast<int>(posBOpposite.x * PHYSICS_SCALE);
+    int yBOpposite = static_cast<int>(posBOpposite.y * PHYSICS_SCALE);
 
     // Define centers of the semi-circles
     b2Vec3 centerA = b2Vec3(xA + 0.8 * (xAOpposite - xA), yA + 0.8 * (yAOpposite - yA), 1);
@@ -403,11 +403,11 @@ void renderCatMouth(SDL_Renderer* renderer, b2World& world) {
     // Get angle of the line between bodyA and boddyAOpposite
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) + M_PI/2;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
 
-    int xAOpposite = static_cast<int>(posAOpposite.x * SCALE);
-    int yAOpposite = static_cast<int>(posAOpposite.y * SCALE);
+    int xAOpposite = static_cast<int>(posAOpposite.x * PHYSICS_SCALE);
+    int yAOpposite = static_cast<int>(posAOpposite.y * PHYSICS_SCALE);
 
     b2Mat33 rotationMatrixA;
     rotationMatrixA.ex.Set(cos(angle), -sin(angle), 0);
@@ -460,10 +460,10 @@ void renderCatEars(SDL_Renderer* renderer, b2World& world) {
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) - M_PI/6 + M_PI/3;
     float angle2 = atan2(posBOpposite.y - posB.y, posBOpposite.x - posB.x) - M_PI/6 + M_PI;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
-    int xB = static_cast<int>(posB.x * SCALE);
-    int yB = static_cast<int>(posB.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
+    int xB = static_cast<int>(posB.x * PHYSICS_SCALE);
+    int yB = static_cast<int>(posB.y * PHYSICS_SCALE);
 
     b2Mat33 triangleA;
     triangleA.ex.Set(xA - 10, yA + 10, 1);
@@ -538,10 +538,10 @@ void renderSushi(SDL_Renderer* renderer, b2World& world, b2Body& body) {
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_Rect rect;
-    rect.x = (int)(vertices[0].x * SCALE);
-    rect.y = (int)(vertices[0].y * SCALE);
-    rect.w = (int)((vertices[2].x - vertices[0].x) * SCALE);
-    rect.h = (int)((vertices[2].y - vertices[0].y) * SCALE);
+    rect.x = (int)(vertices[0].x * PHYSICS_SCALE);
+    rect.y = (int)(vertices[0].y * PHYSICS_SCALE);
+    rect.w = (int)((vertices[2].x - vertices[0].x) * PHYSICS_SCALE);
+    rect.h = (int)((vertices[2].y - vertices[0].y) * PHYSICS_SCALE);
     SDL_RenderFillRect(renderer, &rect);
 }
 
@@ -564,8 +564,8 @@ void renderObstacle(SDL_Renderer* renderer, b2World& world, b2Body& body) {
 
             for (int i = 0; i < vertexCount; ++i) {
                 b2Vec2 wp = body.GetWorldPoint(polygon->m_vertices[i]);
-                vx[i] = static_cast<Sint16>(wp.x * SCALE);
-                vy[i] = static_cast<Sint16>(wp.y * SCALE);
+                vx[i] = static_cast<Sint16>(wp.x * PHYSICS_SCALE);
+                vy[i] = static_cast<Sint16>(wp.y * PHYSICS_SCALE);
             }
 
             // Draw filled polygon with rotation handled
@@ -585,8 +585,8 @@ void renderObstacles(SDL_Renderer* renderer, b2World& world) {
 
 void generateRandomSushi(b2World& world) {
 
-    float x = (rand() % (WINDOW_WIDTH - 100)) / SCALE;
-    float y = (rand() % (WINDOW_HEIGHT - 100)) / SCALE;
+    float x = (rand() % (WINDOW_WIDTH - 100)) / PHYSICS_SCALE;
+    float y = (rand() % (WINDOW_HEIGHT - 100)) / PHYSICS_SCALE;
     b2BodyDef rectangleBodyDef;
     rectangleBodyDef.type = b2_kinematicBody;
     rectangleBodyDef.position.Set(x, y);
@@ -616,27 +616,27 @@ int main(int argc, char* argv[]) {
 
     // // Define the ground body.
     // b2BodyDef groundBodyDef;
-    // groundBodyDef.position.Set(WINDOW_WIDTH / SCALE / 2, (WINDOW_HEIGHT / SCALE) - 0.5f);
+    // groundBodyDef.position.Set(WINDOW_WIDTH / PHYSICS_SCALE / 2, (WINDOW_HEIGHT / PHYSICS_SCALE) - 0.5f);
     // b2Body* groundBody = world.CreateBody(&groundBodyDef);
     // b2PolygonShape groundBox;
-    // groundBox.SetAsBox(WINDOW_WIDTH / SCALE / 2, 0.5f); // As wide as the screen
+    // groundBox.SetAsBox(WINDOW_WIDTH / PHYSICS_SCALE / 2, 0.5f); // As wide as the screen
     // groundBody->CreateFixture(&groundBox, 0.0f);
 
     // Define the left wall body.
     b2BodyDef leftWallBodyDef;
-    leftWallBodyDef.position.Set(5.0f, WINDOW_HEIGHT / SCALE / 2);
+    leftWallBodyDef.position.Set(5.0f, WINDOW_HEIGHT / PHYSICS_SCALE / 2);
     b2Body* leftWallBody = world.CreateBody(&leftWallBodyDef);
     b2PolygonShape leftWallBox;
-    leftWallBox.SetAsBox(0.5f, WINDOW_HEIGHT / SCALE / 4); // As tall as the screen
+    leftWallBox.SetAsBox(0.5f, WINDOW_HEIGHT / PHYSICS_SCALE / 4); // As tall as the screen
     leftWallBody->CreateFixture(&leftWallBox, 0.0f);
     staticObjects.push_back(leftWallBody);
 
     // Define the right wall body.
     b2BodyDef rightWallBodyDef;
-    rightWallBodyDef.position.Set((WINDOW_WIDTH / SCALE) - 5.0f, WINDOW_HEIGHT / SCALE / 2);
+    rightWallBodyDef.position.Set((WINDOW_WIDTH / PHYSICS_SCALE) - 5.0f, WINDOW_HEIGHT / PHYSICS_SCALE / 2);
     b2Body* rightWallBody = world.CreateBody(&rightWallBodyDef);
     b2PolygonShape rightWallBox;
-    rightWallBox.SetAsBox(0.5f, WINDOW_HEIGHT / SCALE / 4); // As tall as the screen
+    rightWallBox.SetAsBox(0.5f, WINDOW_HEIGHT / PHYSICS_SCALE / 4); // As tall as the screen
     rightWallBody->CreateFixture(&rightWallBox, 0.0f);
     staticObjects.push_back(rightWallBody);
 
@@ -726,8 +726,8 @@ int main(int argc, char* argv[]) {
                 quit = true;
             } else if (event.type == SDL_MOUSEBUTTONDOWN) {
                 RADIUS = 1.0f;
-                float centerX = event.button.x / SCALE;
-                float centerY = event.button.y / SCALE;
+                float centerX = event.button.x / PHYSICS_SCALE;
+                float centerY = event.button.y / PHYSICS_SCALE;
 
                 // Clear previous particles
                 for (auto* p : particles) {

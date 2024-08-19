@@ -11,7 +11,9 @@
 // ----------------- Globals -----------------
 int WINDOW_WIDTH = 1920;
 int WINDOW_HEIGHT = 1080;
-float SCALE = 50.0f;
+
+float PHYSICS_SCALE = 50.0f;
+float WINDOW_SCALE = 2.0f;
 
 int NUM_CAT_PARTICLES = 25;
 int BASE_CAT_RADIUS = 1.0f;

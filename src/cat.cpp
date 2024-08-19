@@ -242,9 +242,9 @@ void Cat::renderCatParticles(SDL_Renderer* renderer) {
     for (auto body = particles.begin(); body != particles.end(); body = next(body)) {
         b2Vec2 position = (*body)->GetPosition();
         b2CircleShape* circle = static_cast<b2CircleShape*>((*body)->GetFixtureList()->GetShape());
-        int pixelRadius = static_cast<int>(circle->m_radius * SCALE);
-        int centerX = static_cast<int>(position.x * SCALE);
-        int centerY = static_cast<int>(position.y * SCALE);
+        int pixelRadius = static_cast<int>(circle->m_radius * PHYSICS_SCALE);
+        int centerX = static_cast<int>(position.x * PHYSICS_SCALE);
+        int centerY = static_cast<int>(position.y * PHYSICS_SCALE);
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
         filledCircleRGBA(renderer, centerX, centerY, pixelRadius, 255, 0, 0, 255); // Draw filled circle
     }
@@ -259,8 +259,8 @@ void Cat::renderPolygon(SDL_Renderer* renderer) {
     for (auto body = particles.begin(); body != particles.end(); body = next(body)) {
         if ((*body)->GetType() == b2_dynamicBody) {
             b2Vec2 position = (*body)->GetPosition();
-            int centerX = static_cast<int>(position.x * SCALE);
-            int centerY = static_cast<int>(position.y * SCALE);
+            int centerX = static_cast<int>(position.x * PHYSICS_SCALE);
+            int centerY = static_cast<int>(position.y * PHYSICS_SCALE);
             vx.push_back(centerX);
             vy.push_back(centerY);
         }
@@ -288,15 +288,15 @@ void Cat::renderCatEyes(SDL_Renderer* renderer) {
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) - M_PI/2 + M_PI/6;
     float angle2 = atan2(posBOpposite.y - posB.y, posBOpposite.x - posB.x) - M_PI/2 - M_PI/6;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
-    int xB = static_cast<int>(posB.x * SCALE);
-    int yB = static_cast<int>(posB.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
+    int xB = static_cast<int>(posB.x * PHYSICS_SCALE);
+    int yB = static_cast<int>(posB.y * PHYSICS_SCALE);
 
-    int xAOpposite = static_cast<int>(posAOpposite.x * SCALE);
-    int yAOpposite = static_cast<int>(posAOpposite.y * SCALE);
-    int xBOpposite = static_cast<int>(posBOpposite.x * SCALE);
-    int yBOpposite = static_cast<int>(posBOpposite.y * SCALE);
+    int xAOpposite = static_cast<int>(posAOpposite.x * PHYSICS_SCALE);
+    int yAOpposite = static_cast<int>(posAOpposite.y * PHYSICS_SCALE);
+    int xBOpposite = static_cast<int>(posBOpposite.x * PHYSICS_SCALE);
+    int yBOpposite = static_cast<int>(posBOpposite.y * PHYSICS_SCALE);
 
     int size = 8;
 
@@ -394,15 +394,15 @@ void Cat::renderCatLegs(SDL_Renderer* renderer) {
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) - M_PI/2 + M_PI/6;
     float angle2 = atan2(posBOpposite.y - posB.y, posBOpposite.x - posB.x) - M_PI/2 - M_PI/6;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
-    int xB = static_cast<int>(posB.x * SCALE);
-    int yB = static_cast<int>(posB.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
+    int xB = static_cast<int>(posB.x * PHYSICS_SCALE);
+    int yB = static_cast<int>(posB.y * PHYSICS_SCALE);
 
-    int xAOpposite = static_cast<int>(posAOpposite.x * SCALE);
-    int yAOpposite = static_cast<int>(posAOpposite.y * SCALE);
-    int xBOpposite = static_cast<int>(posBOpposite.x * SCALE);
-    int yBOpposite = static_cast<int>(posBOpposite.y * SCALE);
+    int xAOpposite = static_cast<int>(posAOpposite.x * PHYSICS_SCALE);
+    int yAOpposite = static_cast<int>(posAOpposite.y * PHYSICS_SCALE);
+    int xBOpposite = static_cast<int>(posBOpposite.x * PHYSICS_SCALE);
+    int yBOpposite = static_cast<int>(posBOpposite.y * PHYSICS_SCALE);
 
     // Define centers of the semi-circles
     b2Vec3 centerA = b2Vec3(xA + 0.8 * (xAOpposite - xA), yA + 0.8 * (yAOpposite - yA), 1);
@@ -438,11 +438,11 @@ void Cat::renderCatMouth(SDL_Renderer* renderer) {
     // Get angle of the line between bodyA and boddyAOpposite
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) + M_PI/2;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
 
-    int xAOpposite = static_cast<int>(posAOpposite.x * SCALE);
-    int yAOpposite = static_cast<int>(posAOpposite.y * SCALE);
+    int xAOpposite = static_cast<int>(posAOpposite.x * PHYSICS_SCALE);
+    int yAOpposite = static_cast<int>(posAOpposite.y * PHYSICS_SCALE);
 
     b2Mat33 rotationMatrixA;
     rotationMatrixA.ex.Set(cos(angle), -sin(angle), 0);
@@ -495,10 +495,10 @@ void Cat::renderCatEars(SDL_Renderer* renderer) {
     float angle = atan2(posAOpposite.y - posA.y, posAOpposite.x - posA.x) - M_PI/6 + M_PI/3;
     float angle2 = atan2(posBOpposite.y - posB.y, posBOpposite.x - posB.x) - M_PI/6 + M_PI;
 
-    int xA = static_cast<int>(posA.x * SCALE);
-    int yA = static_cast<int>(posA.y * SCALE);
-    int xB = static_cast<int>(posB.x * SCALE);
-    int yB = static_cast<int>(posB.y * SCALE);
+    int xA = static_cast<int>(posA.x * PHYSICS_SCALE);
+    int yA = static_cast<int>(posA.y * PHYSICS_SCALE);
+    int xB = static_cast<int>(posB.x * PHYSICS_SCALE);
+    int yB = static_cast<int>(posB.y * PHYSICS_SCALE);
 
     b2Mat33 triangleA;
     triangleA.ex.Set(xA - 10, yA + 10, 1);

@@ -11,7 +11,9 @@
 
 extern int WINDOW_WIDTH;
 extern int WINDOW_HEIGHT;
-extern float SCALE;
+
+extern float PHYSICS_SCALE;
+extern float WINDOW_SCALE;
 
 extern int NUM_CAT_PARTICLES;
 extern int BASE_CAT_RADIUS;
@@ -51,10 +53,10 @@ inline b2Vec2 operator/(const b2Vec2& v, float a) {
 // Helper function
 inline SDL_Rect box2DToSDL(const b2Vec2& position, float width, float height) {
     SDL_Rect rect;
-    rect.x = (int)(position.x * SCALE - width * SCALE / 2);
-    rect.y = (int)(position.y * SCALE - height * SCALE / 2);
-    rect.w = (int)(width * SCALE);
-    rect.h = (int)(height * SCALE);
+    rect.x = (int)(position.x * PHYSICS_SCALE - width * PHYSICS_SCALE / 2);
+    rect.y = (int)(position.y * PHYSICS_SCALE - height * PHYSICS_SCALE / 2);
+    rect.w = (int)(width * PHYSICS_SCALE);
+    rect.h = (int)(height * PHYSICS_SCALE);
     return rect;
 }
 

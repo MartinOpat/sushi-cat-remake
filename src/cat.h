@@ -25,7 +25,7 @@ public:
     void setPosition(float x, float y);
     void eatSushi();
 
-    bool isOffscreen() {return particles[0]->GetPosition().y > WINDOW_HEIGHT/SCALE;};
+    bool isOffscreen() {return particles[0]->GetPosition().y > WINDOW_HEIGHT/PHYSICS_SCALE;};
     bool isStuck(bool &isDragging);
     void toggleSquish(b2World *world);
 

@@ -49,10 +49,10 @@ void Sushi::render(SDL_Renderer* renderer) {
     // }
     // SDL_SetRenderDrawColor(renderer, 250, 128, 114, SDL_ALPHA_OPAQUE);
     // SDL_Rect rect;
-    // rect.x = (int)(vertices[0].x * SCALE);
-    // rect.y = (int)(vertices[0].y * SCALE);
-    // rect.w = (int)((vertices[2].x - vertices[0].x) * SCALE);
-    // rect.h = (int)((vertices[2].y - vertices[0].y) * SCALE);
+    // rect.x = (int)(vertices[0].x * PHYSICS_SCALE);
+    // rect.y = (int)(vertices[0].y * PHYSICS_SCALE);
+    // rect.w = (int)((vertices[2].x - vertices[0].x) * PHYSICS_SCALE);
+    // rect.h = (int)((vertices[2].y - vertices[0].y) * PHYSICS_SCALE);
     // SDL_RenderFillRect(renderer, &rect);
 
     // Alternative version where we draw the sushi as a texture

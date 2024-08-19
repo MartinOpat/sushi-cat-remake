@@ -6,7 +6,7 @@ MainView::MainView() {
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
     window = SDL_CreateWindow("Box2D and SDL2 Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                          WINDOW_WIDTH, WINDOW_HEIGHT, 0);
+                                          WINDOW_WIDTH / WINDOW_SCALE, WINDOW_HEIGHT / WINDOW_SCALE, 0);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     // #ifdef __WIN32__
