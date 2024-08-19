@@ -1,9 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "globals.h"
 #include <SDL2/SDL.h>
+#include <iostream>
 
+#include "globals.h"
 #include "button.h"
 #include "mainview.h"
 
@@ -28,6 +29,7 @@ private:
     void renderTitle();
     void renderInstructionsButton();
     void renderInstructions();
+    void renderScalingButtons();
 
     void render();
 

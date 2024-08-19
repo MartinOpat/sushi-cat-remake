@@ -11,6 +11,12 @@ Menu::Menu(bool *running) {
     instructionsButton = new Button(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT / 2 - 50, buttonWidth, buttonHeight, "Controls");
     instructionsButton->bindAction([this](){instructionsDisplayed = !instructionsDisplayed;});
 
+    downscaleButton = new Button(10, 10, buttonWidth/4, buttonHeight, "-");
+    downscaleButton->bindAction([this](){SDL_SetWindowSize(view->getWindow(), WINDOW_WIDTH/X_WINDOW_SCALE*0.9, WINDOW_HEIGHT/Y_WINDOW_SCALE*0.9);});
+
+    upscaleButton = new Button(10 + buttonWidth/4, 10, buttonWidth/4, buttonHeight, "+");
+    upscaleButton->bindAction([this](){SDL_SetWindowSize(view->getWindow(), WINDOW_WIDTH/X_WINDOW_SCALE/0.9, WINDOW_HEIGHT/Y_WINDOW_SCALE/0.9);});
+
     // ----------------- Set up level picker -----------------
     for (int i = 1; i <= numLevels; i++) {
         Button *levelButton = new Button(WINDOW_WIDTH / 2 - 50 + (i-1-numLevels/2)*1.1*buttonWidth, WINDOW_HEIGHT / 2 - 3*buttonHeight, buttonWidth, buttonHeight, "Level " + std::to_string(i));
@@ -23,6 +29,8 @@ Menu::~Menu() {
     delete view;
     delete exitButton;
     delete instructionsButton;
+    delete downscaleButton;
+    delete upscaleButton;
 
     for (Button* button : levelButtons) {
         delete button;
@@ -77,7 +85,7 @@ void Menu::handleEvents() {
                 }
                 break;
             case SDL_WINDOWEVENT:
-                if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+                if (event.window.event == SDL_WINDOWEVENT_RESIZED || event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
                     int newWidth = event.window.data1;
                     int newHeight = event.window.data2;
                     X_WINDOW_SCALE = (float)WINDOW_WIDTH / newWidth;
@@ -95,6 +103,10 @@ void Menu::handleMouseClick(int x, int y) {
         exitButton->doClick();
     } else if (instructionsButton->isWithinBounds(x, y)) {
         instructionsButton->doClick();
+    } else if (downscaleButton->isWithinBounds(x, y)) {
+        downscaleButton->doClick();
+    } else if (upscaleButton->isWithinBounds(x, y)) {
+        upscaleButton->doClick();
     } else {
         for (Button* button : levelButtons) {
             if (button->isWithinBounds(x, y)) {
@@ -112,11 +124,19 @@ void Menu::render() {
 
     renderExitButton();
     renderInstructionsButton();
+    renderScalingButtons();
     renderLevelPicker();
     renderTitle();
     renderInstructions();
 
     SDL_RenderPresent(view->getRenderer());
+}
+
+void Menu::renderScalingButtons() {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    downscaleButton->render(view->getRenderer(), x, y);
+    upscaleButton->render(view->getRenderer(), x, y);
 }
 
 void Menu::renderLevelPicker() {
