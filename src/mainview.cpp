@@ -33,8 +33,8 @@ void MainView::renderSushiLeftUI(int sushisLeft) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     SDL_Rect rect;
-    rect.x = WINDOW_WIDTH - surface->w - 10;
-    rect.y = 10;
+    rect.x = (WINDOW_WIDTH) / X_LEVEL_WINDOW_SCALE  - surface->w - 10;
+    rect.y = 10 / Y_LEVEL_WINDOW_SCALE;
     rect.w = surface->w;
     rect.h = surface->h;
 
@@ -54,10 +54,10 @@ void MainView::renderSushiEatenUI(int sushisEaten) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     SDL_Rect rect;
-    rect.x = WINDOW_WIDTH/2 - surface->w/2;
-    rect.y = WINDOW_HEIGHT/4 - surface->h/2;
-    rect.w = surface->w;
-    rect.h = surface->h;
+    rect.x = (WINDOW_WIDTH/2 - surface->w/2) / X_LEVEL_WINDOW_SCALE;
+    rect.y = (WINDOW_HEIGHT/4 - surface->h/2) / Y_LEVEL_WINDOW_SCALE;
+    rect.w = surface->w / X_LEVEL_WINDOW_SCALE;
+    rect.h = surface->h / Y_LEVEL_WINDOW_SCALE;
 
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 
@@ -73,10 +73,10 @@ void MainView::renderLevelWonUI() {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     SDL_Rect rect;
-    rect.x = WINDOW_WIDTH/2 - surface->w/2;
-    rect.y = WINDOW_HEIGHT/2 - surface->h/2;
-    rect.w = surface->w;
-    rect.h = surface->h;
+    rect.x = (WINDOW_WIDTH/2 - surface->w/2) / X_LEVEL_WINDOW_SCALE;
+    rect.y = (WINDOW_HEIGHT/2 - surface->h/2) / Y_LEVEL_WINDOW_SCALE;
+    rect.w = surface->w / X_LEVEL_WINDOW_SCALE;
+    rect.h = surface->h / Y_LEVEL_WINDOW_SCALE;
 
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 
@@ -92,10 +92,10 @@ void MainView::renderLevelLostUI() {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     SDL_Rect rect;
-    rect.x = WINDOW_WIDTH/2 - surface->w/2;
-    rect.y = WINDOW_HEIGHT/2 - surface->h/2;
-    rect.w = surface->w;
-    rect.h = surface->h;
+    rect.x = (WINDOW_WIDTH/2 - surface->w/2) / X_LEVEL_WINDOW_SCALE;
+    rect.y = (WINDOW_HEIGHT/2 - surface->h/2) / Y_LEVEL_WINDOW_SCALE;
+    rect.w = surface->w / X_LEVEL_WINDOW_SCALE;
+    rect.h = surface->h / Y_LEVEL_WINDOW_SCALE;
 
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 
@@ -161,8 +161,8 @@ void MainView::renderCatsLeftUI(int catsLeft) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
     SDL_Rect rect;
-    rect.x = 10;
-    rect.y = 10;
+    rect.x = 10 / X_LEVEL_WINDOW_SCALE;
+    rect.y = 10 / Y_LEVEL_WINDOW_SCALE;
     rect.w = surface->w;
     rect.h = surface->h;
 
