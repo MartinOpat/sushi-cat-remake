@@ -318,9 +318,9 @@ void MainApp::pollEvents() {
     if (isDragging) {
         int x, y;
         SDL_GetMouseState(&x, &y);
-        float newX = x / PHYSICS_SCALE;
+        float newX = x / PHYSICS_SCALE * X_LEVEL_WINDOW_SCALE;
         newX = std::max(newX, (float)BASE_CAT_RADIUS);
-        newX = std::min(newX, WINDOW_WIDTH/PHYSICS_SCALE - BASE_CAT_RADIUS);
+        newX = std::min(newX, (WINDOW_WIDTH/PHYSICS_SCALE - BASE_CAT_RADIUS));
         cat->setPosition(newX, CAT_SPAWN_HEIGHT);
     }
 
