@@ -118,21 +118,22 @@ void MainView::renderBoxes() {
     if (isBoxLoaded) {
         SDL_Rect rect;
         int offset = BOX_OFFSET;
-        rect.x = -offset;
-        rect.y = WINDOW_HEIGHT*0.9f;
-        rect.w = WINDOW_WIDTH/4 + 2*offset;
-        rect.h = 0.1f*WINDOW_HEIGHT;
+        rect.x = -offset / X_LEVEL_WINDOW_SCALE;
+        rect.y = WINDOW_HEIGHT*0.9f / Y_LEVEL_WINDOW_SCALE;
+        rect.w = (WINDOW_WIDTH/4 + 2*offset) / X_LEVEL_WINDOW_SCALE;
+        rect.h = 0.1f*WINDOW_HEIGHT / Y_LEVEL_WINDOW_SCALE;
         SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
 
-        rect.x = WINDOW_WIDTH/4 - offset;
+        rect.x = (WINDOW_WIDTH/4 - offset) / X_LEVEL_WINDOW_SCALE;
         SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
 
-        rect.x = WINDOW_WIDTH/2 - offset;
+        rect.x = (WINDOW_WIDTH/2 - offset) / X_LEVEL_WINDOW_SCALE;
         SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
 
-        rect.x = 3*WINDOW_WIDTH/4 - offset;
+        rect.x = (3*WINDOW_WIDTH/4 - offset) / X_LEVEL_WINDOW_SCALE;
         SDL_RenderCopy(renderer, bgBoxTexture, NULL, &rect);
     } else {
+        // @deprecated
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_Rect rect;
         rect.x = 0;
