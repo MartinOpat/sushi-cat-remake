@@ -94,7 +94,7 @@ void Cat::updateRadius(float newRadius) {
     b2Body* bodyB = particles[0];
     b2Vec2 posA = bodyA->GetPosition();
     b2Vec2 posB = bodyB->GetPosition();
-    oldAngle = atan2(posB.y - posA.y, posB.x - posA.x);
+    oldAngle = atan2(posB.y - posA.y, posB.x - posA.x) + 0.0625;  // There is a (small) default offset in the rotation -> We solve by simply hardcoding it out
 
 
 
