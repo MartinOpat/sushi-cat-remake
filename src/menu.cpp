@@ -5,16 +5,16 @@ Menu::Menu(bool *running) {
     view = new MainView();
 
     // ----------------- Set up buttons -----------------
-    exitButton = new Button(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT / 2 + 50, buttonWidth, buttonHeight, "Exit");
+    exitButton = new Button(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT / 2 + 150, buttonWidth, buttonHeight, "Exit");
     exitButton->bindAction([this](){*(this->running) = false; inMenu = false;});
 
     instructionsButton = new Button(WINDOW_WIDTH / 2 - 50, WINDOW_HEIGHT / 2 - 50, buttonWidth, buttonHeight, "Controls");
     instructionsButton->bindAction([this](){instructionsDisplayed = !instructionsDisplayed;});
 
-    downscaleButton = new Button(10, 10, buttonWidth/4, buttonHeight, "-");
+    downscaleButton = new Button(WINDOW_WIDTH / 2 - 5, WINDOW_HEIGHT / 2 + 50, buttonWidth/4, buttonHeight, "-");
     downscaleButton->bindAction([this](){SDL_SetWindowSize(view->getWindow(), WINDOW_WIDTH/X_WINDOW_SCALE*0.9, WINDOW_HEIGHT/Y_WINDOW_SCALE*0.9);});
 
-    upscaleButton = new Button(10 + buttonWidth/4, 10, buttonWidth/4, buttonHeight, "+");
+    upscaleButton = new Button(WINDOW_WIDTH / 2 + buttonWidth/4 + 5, WINDOW_HEIGHT / 2 + 50, buttonWidth/4, buttonHeight, "+");
     upscaleButton->bindAction([this](){SDL_SetWindowSize(view->getWindow(), WINDOW_WIDTH/X_WINDOW_SCALE/0.9, WINDOW_HEIGHT/Y_WINDOW_SCALE/0.9);});
 
     // ----------------- Set up level picker -----------------
