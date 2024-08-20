@@ -298,7 +298,7 @@ void Cat::renderCatEyes(SDL_Renderer* renderer) {
     int xBOpposite = static_cast<int>(posBOpposite.x * PHYSICS_SCALE / X_LEVEL_WINDOW_SCALE);
     int yBOpposite = static_cast<int>(posBOpposite.y * PHYSICS_SCALE / Y_LEVEL_WINDOW_SCALE);
 
-    int size = 8;
+    int size = 8 / sqrt(X_LEVEL_WINDOW_SCALE * Y_LEVEL_WINDOW_SCALE);
 
     b2Mat33 leftEye;
     leftEye.ex.Set(xA - size, yA + size, 1);
@@ -409,7 +409,7 @@ void Cat::renderCatLegs(SDL_Renderer* renderer) {
     b2Vec3 centerB = b2Vec3(xB + 0.8 * (xBOpposite - xB), yB + 0.8 * (yBOpposite - yB), 1);
 
     // Define the semi-circle for the left leg
-    int radius = 7;
+    int radius = 7 / sqrt(X_LEVEL_WINDOW_SCALE * Y_LEVEL_WINDOW_SCALE);
     int startAngle = angle * 180 / M_PI;
     int endAngle = (angle + M_PI) * 180 / M_PI;
     arcRGBA(renderer, centerB.x, centerB.y, radius, startAngle, endAngle, 50, 75, 132, 255);
@@ -449,7 +449,7 @@ void Cat::renderCatMouth(SDL_Renderer* renderer) {
     rotationMatrixA.ey.Set(sin(angle), cos(angle), 0);
     rotationMatrixA.ez.Set(0, 0, 1);
 
-    int radius = 10;
+    int radius = 10 / sqrt(X_LEVEL_WINDOW_SCALE * Y_LEVEL_WINDOW_SCALE);
     b2Vec3 shiftA = rotationMatrixA * b2Vec3(radius, 0, 0);
 
     // Define centers of the arcs
@@ -500,15 +500,17 @@ void Cat::renderCatEars(SDL_Renderer* renderer) {
     int xB = static_cast<int>(posB.x * PHYSICS_SCALE / X_LEVEL_WINDOW_SCALE);
     int yB = static_cast<int>(posB.y * PHYSICS_SCALE / Y_LEVEL_WINDOW_SCALE);
 
+    int size = 10 / sqrt(X_LEVEL_WINDOW_SCALE * Y_LEVEL_WINDOW_SCALE);
+
     b2Mat33 triangleA;
-    triangleA.ex.Set(xA - 10, yA + 10, 1);
-    triangleA.ey.Set(xA + 10, yA + 10, 1);
-    triangleA.ez.Set(xA, yA - 10, 1);
+    triangleA.ex.Set(xA - size, yA + size, 1);
+    triangleA.ey.Set(xA + size, yA + size, 1);
+    triangleA.ez.Set(xA, yA - size, 1);
 
     b2Mat33 triangleB;
-    triangleB.ex.Set(xB - 10, yB + 10, 1);
-    triangleB.ey.Set(xB + 10, yB + 10, 1);
-    triangleB.ez.Set(xB, yB - 10, 1);
+    triangleB.ex.Set(xB - size, yB + size, 1);
+    triangleB.ey.Set(xB + size, yB + size, 1);
+    triangleB.ez.Set(xB, yB - size, 1);
 
     // Transform triangle coordinates
     triangleA.ex = triangleA.ex - b2Vec3(xA, yA, 0);
